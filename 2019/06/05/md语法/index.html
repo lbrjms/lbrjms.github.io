@@ -1,0 +1,160 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>md语法 | 飞狐</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/8.0.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/3.4.0/jquery.min.js"></script><link rel="icon" mask sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">md语法</h1><a id="logo" href="/.">飞狐</a><p class="description">做一些简单的事情 没事多折腾</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">md语法</h1><div class="post-meta">Jun 5, 2019<span> | </span><span class="category"><a href="/categories/文章/">文章</a></span></div><div class="post-content"><h1 id="md简单语法"><a href="#md简单语法" class="headerlink" title="md简单语法"></a>md简单语法</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6><h1 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h1><p>//形式一</p>
+<ul>
+<li>a</li>
+<li>b</li>
+<li>c</li>
+</ul>
+<p>//形式二</p>
+<ul>
+<li>d</li>
+<li>e</li>
+<li>f</li>
+</ul>
+<p>//形式三</p>
+<ul>
+<li>g</li>
+<li>h</li>
+<li>i</li>
+</ul>
+<h1 id="无序列表嵌套"><a href="#无序列表嵌套" class="headerlink" title="无序列表嵌套"></a>无序列表嵌套</h1><ul>
+<li>123<ul>
+<li>abc</li>
+<li>bcd</li>
+<li>cde</li>
+</ul>
+</li>
+<li>465</li>
+<li>789</li>
+</ul>
+<h1 id="有序列表嵌套"><a href="#有序列表嵌套" class="headerlink" title="有序列表嵌套"></a>有序列表嵌套</h1><ol>
+<li>abcd<ol>
+<li>abcde</li>
+<li>abcde</li>
+<li>abcde</li>
+</ol>
+</li>
+<li>bcde</li>
+<li>cdef</li>
+</ol>
+<h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><blockquote>
+<p>引用内容、说明内容。在语句前面加一个 &gt; ，注意是英文的那个右尖括号，注意空格，引用因为是一个区块，理论上是应该什么内容都可以放，比如说：标题，列表，引用等等。</p>
+</blockquote>
+<blockquote>
+<p>一级引用</p>
+<blockquote>
+<p>二级引用</p>
+<blockquote>
+<p>三级引用</p>
+<blockquote>
+<p>四级引用</p>
+<blockquote>
+<p>五级引用</p>
+<blockquote>
+<p>六级引用</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h1 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h1><p><code>NSOpenPanel* openDlg = [NSOpenPanel openPanel]</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">NSOpenPanel* openDlg = [NSOpenPanel openPanel];</span><br><span class="line"></span><br><span class="line">[openDlg setCanChooseFiles:TRUE];</span><br><span class="line">[openDlg setCanChooseDirectories:FALSE];</span><br><span class="line">[openDlg setAllowsMultipleSelection:FALSE];</span><br><span class="line">[openDlg setAllowsOtherFileTypes:FALSE];</span><br><span class="line">[openDlg setAllowedFileTypes:@[@&quot;ipa&quot;, @&quot;IPA&quot;, @&quot;xcarchive&quot;]];</span><br><span class="line"></span><br><span class="line">if ([openDlg runModal] == NSOKButton)</span><br><span class="line">&#123;</span><br><span class="line">    NSString* fileNameOpened = [[[openDlg URLs] objectAtIndex:0] path];</span><br><span class="line">    [pathField setStringValue:fileNameOpened];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h1><ul>
+<li>行内式<br>链接的文字放在[]中，链接地址放在随后的()中，链接也可以带title属性，链接地址后面空一格，然后用引号引起来</li>
+</ul>
+<p><a href="https://www.jianshu.com" title="创作你的创作" target="_blank" rel="noopener">简书</a>,
+是一个创作社区,任何人均可以在其上进行创作。用户在简书上面可以方便的创作自己的作品,互相交流</p>
+<ul>
+<li>参数式<br>链接的文字放在[]中，链接地址放在随后的:后，链接地址后面空一格，然后用引号引起来</li>
+</ul>
+<p><a href="https://www.jianshu.com" title="创作你的创作" target="_blank" rel="noopener">简书</a>是一个创作社区,任何人均可以在其上进行创作。用户在简书上面可以方便的创作自己的作品,互相交流。</p>
+<p>//参数定义的其他写法</p>
+<h1 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h1><h3 id="至少三个字符"><a href="#至少三个字符" class="headerlink" title="至少三个字符"></a>至少三个字符</h3><hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<h1 id="斜体-加粗-删除线"><a href="#斜体-加粗-删除线" class="headerlink" title="斜体 加粗 删除线"></a>斜体 加粗 删除线</h1><p><em>md</em><br><strong>md</strong></p>
+<p><em>md</em><br><strong>md</strong></p>
+<p><del>删除</del></p>
+<h1 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h1><p>//例子一</p>
+<table>
+<thead>
+<tr>
+<th align="left">123</th>
+<th align="center">234</th>
+<th align="right">345</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">abc</td>
+<td align="center">bcd</td>
+<td align="right">cde</td>
+</tr>
+<tr>
+<td align="left">abc</td>
+<td align="center">bcd</td>
+<td align="right">cde</td>
+</tr>
+<tr>
+<td align="left">abc</td>
+<td align="center">bcd</td>
+<td align="right">cde</td>
+</tr>
+</tbody></table>
+<p>//例子二</p>
+<table>
+<thead>
+<tr>
+<th align="left">123</th>
+<th align="center">234</th>
+<th align="right">345</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">abc</td>
+<td align="center">bcd</td>
+<td align="right">cde</td>
+</tr>
+<tr>
+<td align="left">abc</td>
+<td align="center">bcd</td>
+<td align="right">cde</td>
+</tr>
+<tr>
+<td align="left">abc</td>
+<td align="center">bcd</td>
+<td align="right">cde</td>
+</tr>
+</tbody></table>
+<p>//例子三</p>
+<table>
+<thead>
+<tr>
+<th align="left">123</th>
+<th align="center">234</th>
+<th align="right">345</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">abc</td>
+<td align="center">bcd</td>
+<td align="right">cde</td>
+</tr>
+<tr>
+<td align="left">abc</td>
+<td align="center">bcd</td>
+<td align="right">cde</td>
+</tr>
+<tr>
+<td align="left">abc</td>
+<td align="center">bcd</td>
+<td align="right">cde</td>
+</tr>
+</tbody></table>
+</div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>Author: </strong>WJ</li><li class="post-copyright-link"><strong>Blog Link: </strong><a href="/2019/06/05/md语法/">http://yoursite.com/2019/06/05/md语法/</a></li><li class="post-copyright-license"><strong>Copyright Declaration: </strong>The author owns the copyright. Please indicate the source reproduced!</li></ul></div><br><div class="tags"><a href="/tags/Hexo/">Hexo</a></div><div class="post-nav"><a class="pre" href="/2019/06/05/test/">test</a><a class="next" href="/2019/06/05/GitHub-Pages-Hexo写博客/">搭建个人博客(GitHub Pages + Hexo)</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/文章/">文章</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/05/md语法/">md语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/05/GitHub-Pages-Hexo写博客/">搭建个人博客(GitHub Pages + Hexo)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/05/hello-world/">Hello World</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">飞狐.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
