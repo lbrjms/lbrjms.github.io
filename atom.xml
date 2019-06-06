@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>飞狐</title>
+  
+  <subtitle>做一些简单的事情 把有用的东西写下来 总有一天你能用的到</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://lbrjms.github.io/"/>
+  <updated>2019-06-06T07:40:47.656Z</updated>
+  <id>http://lbrjms.github.io/</id>
+  
+  <author>
+    <name>WJ</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>RSS订阅打开都是xml的问题</title>
+    <link href="http://lbrjms.github.io/2019/06/06/RSS%E8%AE%A2%E9%98%85%E6%89%93%E5%BC%80%E9%83%BD%E6%98%AFxml%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://lbrjms.github.io/2019/06/06/RSS订阅打开都是xml的问题/</id>
+    <published>2019-06-06T07:20:22.000Z</published>
+    <updated>2019-06-06T07:40:47.656Z</updated>
+    
+    <content type="html"><![CDATA[<p>在这个各种信息混杂的时代，rss真的感觉是一股清流，我们可以通过这个功能订阅自己先看的文章，节目….</p><p>刚接触rss遇到最多的问题就是点击网站的rss订阅 显示的都是xml代码，这是由于没有安装RSS客户端 或是没有支持RSS的插件</p><p>如果是google浏览器可以安装feeder插件挺好用</p><p><a href="https://juejin.im/post/5c382a326fb9a049f15469eb" target="_blank" rel="noopener">https://juejin.im/post/5c382a326fb9a049f15469eb</a></p><p><a href="https://www.inoreader.com/" target="_blank" rel="noopener">https://www.inoreader.com/</a></p>]]></content>
+    
+    <summary type="html">
+    
+      看到好多网站都有RSS订阅的东西，最早不知道什么作用，后来发现确实很好 这里记录一下自己看到的关于rss的文章
+    
+    </summary>
+    
+    
+      <category term="hexo" scheme="http://lbrjms.github.io/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>md语法</title>
+    <link href="http://lbrjms.github.io/2019/06/05/md%E8%AF%AD%E6%B3%95/"/>
+    <id>http://lbrjms.github.io/2019/06/05/md语法/</id>
+    <published>2019-06-05T08:26:20.000Z</published>
+    <updated>2019-06-05T08:32:39.006Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="md简单语法"><a href="#md简单语法" class="headerlink" title="md简单语法"></a>md简单语法</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6><h1 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h1><p>//形式一</p><ul><li>a</li><li>b</li><li>c</li></ul><p>//形式二</p><ul><li>d</li><li>e</li><li>f</li></ul><p>//形式三</p><ul><li>g</li><li>h</li><li>i</li></ul><h1 id="无序列表嵌套"><a href="#无序列表嵌套" class="headerlink" title="无序列表嵌套"></a>无序列表嵌套</h1><ul><li>123<ul><li>abc</li><li>bcd</li><li>cde</li></ul></li><li>465</li><li>789</li></ul><h1 id="有序列表嵌套"><a href="#有序列表嵌套" class="headerlink" title="有序列表嵌套"></a>有序列表嵌套</h1><ol><li>abcd<ol><li>abcde</li><li>abcde</li><li>abcde</li></ol></li><li>bcde</li><li>cdef</li></ol><h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><blockquote><p>引用内容、说明内容。在语句前面加一个 &gt; ，注意是英文的那个右尖括号，注意空格，引用因为是一个区块，理论上是应该什么内容都可以放，比如说：标题，列表，引用等等。</p></blockquote><blockquote><p>一级引用</p><blockquote><p>二级引用</p><blockquote><p>三级引用</p><blockquote><p>四级引用</p><blockquote><p>五级引用</p><blockquote><p>六级引用</p></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote><h1 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h1><p><code>NSOpenPanel* openDlg = [NSOpenPanel openPanel]</code></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">NSOpenPanel* openDlg = [NSOpenPanel openPanel];</span><br><span class="line"></span><br><span class="line">[openDlg setCanChooseFiles:TRUE];</span><br><span class="line">[openDlg setCanChooseDirectories:FALSE];</span><br><span class="line">[openDlg setAllowsMultipleSelection:FALSE];</span><br><span class="line">[openDlg setAllowsOtherFileTypes:FALSE];</span><br><span class="line">[openDlg setAllowedFileTypes:@[@&quot;ipa&quot;, @&quot;IPA&quot;, @&quot;xcarchive&quot;]];</span><br><span class="line"></span><br><span class="line">if ([openDlg runModal] == NSOKButton)</span><br><span class="line">&#123;</span><br><span class="line">    NSString* fileNameOpened = [[[openDlg URLs] objectAtIndex:0] path];</span><br><span class="line">    [pathField setStringValue:fileNameOpened];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h1><ul><li>行内式<br>链接的文字放在[]中，链接地址放在随后的()中，链接也可以带title属性，链接地址后面空一格，然后用引号引起来</li></ul><p><a href="https://www.jianshu.com" title="创作你的创作" target="_blank" rel="noopener">简书</a>,是一个创作社区,任何人均可以在其上进行创作。用户在简书上面可以方便的创作自己的作品,互相交流</p><ul><li>参数式<br>链接的文字放在[]中，链接地址放在随后的:后，链接地址后面空一格，然后用引号引起来</li></ul><p><a href="https://www.jianshu.com" title="创作你的创作" target="_blank" rel="noopener">简书</a>是一个创作社区,任何人均可以在其上进行创作。用户在简书上面可以方便的创作自己的作品,互相交流。</p><p>//参数定义的其他写法</p><h1 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h1><h3 id="至少三个字符"><a href="#至少三个字符" class="headerlink" title="至少三个字符"></a>至少三个字符</h3><hr><hr><hr><hr><hr><hr><hr><hr><hr><h1 id="斜体-加粗-删除线"><a href="#斜体-加粗-删除线" class="headerlink" title="斜体 加粗 删除线"></a>斜体 加粗 删除线</h1><p><em>md</em><br><strong>md</strong></p><p><em>md</em><br><strong>md</strong></p><p><del>删除</del></p><h1 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h1><p>//例子一</p><table><thead><tr><th align="left">123</th><th align="center">234</th><th align="right">345</th></tr></thead><tbody><tr><td align="left">abc</td><td align="center">bcd</td><td align="right">cde</td></tr><tr><td align="left">abc</td><td align="center">bcd</td><td align="right">cde</td></tr><tr><td align="left">abc</td><td align="center">bcd</td><td align="right">cde</td></tr></tbody></table><p>//例子二</p><table><thead><tr><th align="left">123</th><th align="center">234</th><th align="right">345</th></tr></thead><tbody><tr><td align="left">abc</td><td align="center">bcd</td><td align="right">cde</td></tr><tr><td align="left">abc</td><td align="center">bcd</td><td align="right">cde</td></tr><tr><td align="left">abc</td><td align="center">bcd</td><td align="right">cde</td></tr></tbody></table><p>//例子三</p><table><thead><tr><th align="left">123</th><th align="center">234</th><th align="right">345</th></tr></thead><tbody><tr><td align="left">abc</td><td align="center">bcd</td><td align="right">cde</td></tr><tr><td align="left">abc</td><td align="center">bcd</td><td align="right">cde</td></tr><tr><td align="left">abc</td><td align="center">bcd</td><td align="right">cde</td></tr></tbody></table>]]></content>
+    
+    <summary type="html">
+    
+      记录常用的md命令
+    
+    </summary>
+    
+      <category term="文章" scheme="http://lbrjms.github.io/categories/%E6%96%87%E7%AB%A0/"/>
+    
+    
+      <category term="Hexo" scheme="http://lbrjms.github.io/tags/Hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>搭建个人博客(GitHub Pages + Hexo)</title>
+    <link href="http://lbrjms.github.io/2019/06/05/GitHub-Pages-Hexo%E5%86%99%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://lbrjms.github.io/2019/06/05/GitHub-Pages-Hexo写博客/</id>
+    <published>2019-06-05T07:11:20.000Z</published>
+    <updated>2019-06-05T17:02:40.352Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="创建github仓库"><a href="#创建github仓库" class="headerlink" title="创建github仓库"></a>创建github仓库</h3><ul><li>创建一个github仓库 仓库名必须与用户名相同 之后的博客地址就是：<a href="http://username.github.io" target="_blank" rel="noopener">http://username.github.io</a></li></ul><h3 id="配置ssh"><a href="#配置ssh" class="headerlink" title="配置ssh"></a>配置ssh</h3><p><em>Git可以通过https和ssh两种方式连接服务器上的仓库。ssh的方式会在传输前压缩数据，<br>这样传输的效率很高。而且不需要每次都输入账号和密码。</em></p><ul><li>git的用户名和邮箱设置</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;your name”</span><br><span class="line">$ git config --global user.email &quot;your email&quot;</span><br></pre></td></tr></table></figure><ul><li>查看本地是否有ssh密钥（有这些文件说明已经有了id_rsa，id_rsa.pubknown_hosts），<br>如果没有就自己生成</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.ssh</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">生成ssh命令 根据提示一步步操作即可</span><br><span class="line">ssh-keygen -t rsa -C “your email”</span><br></pre></td></tr></table></figure><ul><li>vim打开公钥文件 复制共钥到github的设置里面</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim id_rsa.pub</span><br></pre></td></tr></table></figure><h3 id="安装Hexo环境"><a href="#安装Hexo环境" class="headerlink" title="安装Hexo环境"></a>安装Hexo环境</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 安装hexo</span><br><span class="line">npm install hexo-cli -g</span><br><span class="line"></span><br><span class="line">// 初始化一个blog文件夹</span><br><span class="line">hexo init blog</span><br><span class="line"></span><br><span class="line">// 到blog文件夹下启动服务 之后就可以在http://localhost:4000 看的你的博客</span><br><span class="line">cd blog</span><br><span class="line">npm install</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure><h3 id="配置Deployment"><a href="#配置Deployment" class="headerlink" title="配置Deployment"></a>配置Deployment</h3><ul><li>修改blog文件夹下的_config.yml文件</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">### :号后面都要有空格 否则hexo d的时候会没反应</span><br><span class="line">deploy:</span><br><span class="line">type:git</span><br><span class="line">repo:git@github.com:你的github账号/你的github账号.github.io.git</span><br><span class="line">branch:master</span><br></pre></td></tr></table></figure><ul><li>生成新的public文件</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean   //删除旧的public文件</span><br><span class="line">hexo generate / hexo g   //生成新的public文件</span><br></pre></td></tr></table></figure><h3 id="部署到github上"><a href="#部署到github上" class="headerlink" title="部署到github上"></a>部署到github上</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploye / hexo d</span><br></pre></td></tr></table></figure><p><em>到此就初步完成了 在打开<a href="https://lbrjms.github.io就可以看到你的博客了" target="_blank" rel="noopener">https://lbrjms.github.io就可以看到你的博客了</a></em></p><h3 id="更换主题A"><a href="#更换主题A" class="headerlink" title="更换主题Â"></a>更换主题Â</h3><p><em>成功之后的第一件事就是更换主题 选择自己喜欢的主题 下载到themes文件夹下面<br>更改_config.yml 的themes 对应的名字就可以了</em></p><ul><li>下面是我clone的主题</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/tufu9441/maupassant-hexo.git themes/maupassant</span><br><span class="line">$ npm install hexo-renderer-pug --save</span><br><span class="line">$ npm install hexo-renderer-sass --save</span><br></pre></td></tr></table></figure><ul><li>开启分类 tags</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$</span><br><span class="line">$ hexo new page tags</span><br><span class="line">$ hexo new page categories</span><br></pre></td></tr></table></figure><h3 id="创建文章"><a href="#创建文章" class="headerlink" title="创建文章"></a>创建文章</h3><p><code>$ hexo new &quot;title&quot;</code></p><h3 id="关于界面"><a href="#关于界面" class="headerlink" title="关于界面"></a>关于界面</h3><blockquote><p>maupassant主题里有个关于导航菜单，默认点进去是不行的，需要自己新建个。<br>在Hexo的 source 目录新建个 about 文件夹，文件夹里按模板新建个 index.md</p></blockquote><h3 id="更改主题语言"><a href="#更改主题语言" class="headerlink" title="更改主题语言"></a>更改主题语言</h3><p>支持多种语言 去config文件里面改就可以（我找了半天才找到）其实关于一些设置的东西 大多数都在config里面改</p>]]></content>
+    
+    <summary type="html">
+    
+      自己之前搭建过blog，当时是公司的电脑，另外当时也是稀里糊涂搞出来了，后来换了公司把原文件都搞丢了，后来就忘记怎么弄了，这次又重新来了一遍，并做了笔记，记性再好不如写下来 实在。
+    
+    </summary>
+    
+      <category term="文章" scheme="http://lbrjms.github.io/categories/%E6%96%87%E7%AB%A0/"/>
+    
+    
+      <category term="Hexo" scheme="http://lbrjms.github.io/tags/Hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://lbrjms.github.io/2019/06/05/hello-world/"/>
+    <id>http://lbrjms.github.io/2019/06/05/hello-world/</id>
+    <published>2019-06-05T01:40:28.316Z</published>
+    <updated>2019-06-05T01:40:28.317Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
