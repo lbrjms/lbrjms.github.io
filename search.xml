@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[RSS订阅打开都是xml的问题]]></title>
+    <url>%2F2019%2F06%2F06%2FRSS%E8%AE%A2%E9%98%85%E6%89%93%E5%BC%80%E9%83%BD%E6%98%AFxml%E7%9A%84%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[安装rss插件 npm install hexo-generator-feed 在这个各种信息混杂的时代，rss真的感觉是一股清流，我们可以通过这个功能订阅自己先看的文章，节目…. 刚接触rss遇到最多的问题就是点击网站的rss订阅 显示的都是xml代码，这是由于没有安装RSS客户端 或是没有支持RSS的插件 如果是google浏览器可以安装feeder插件挺好用 https://juejin.im/post/5c382a326fb9a049f15469eb https://www.inoreader.com/]]></content>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[md语法]]></title>
+    <url>%2F2019%2F06%2F05%2Fmd%E8%AF%AD%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[md简单语法二级标题三级标题四级标题五级标题六级标题无序列表//形式一 a b c //形式二 d e f //形式三 g h i 无序列表嵌套 123 abc bcd cde 465 789 有序列表嵌套 abcd abcde abcde abcde bcde cdef 引用 引用内容、说明内容。在语句前面加一个 &gt; ，注意是英文的那个右尖括号，注意空格，引用因为是一个区块，理论上是应该什么内容都可以放，比如说：标题，列表，引用等等。 一级引用 二级引用 三级引用 四级引用 五级引用 六级引用 代码块NSOpenPanel* openDlg = [NSOpenPanel openPanel] 1234567891011121314NSOpenPanel* openDlg = [NSOpenPanel openPanel];[openDlg setCanChooseFiles:TRUE];[openDlg setCanChooseDirectories:FALSE];[openDlg setAllowsMultipleSelection:FALSE];[openDlg setAllowsOtherFileTypes:FALSE];[openDlg setAllowedFileTypes:@[@&quot;ipa&quot;, @&quot;IPA&quot;, @&quot;xcarchive&quot;]];if ([openDlg runModal] == NSOKButton)&#123; NSString* fileNameOpened = [[[openDlg URLs] objectAtIndex:0] path]; [pathField setStringValue:fileNameOpened];&#125; 链接 行内式链接的文字放在[]中，链接地址放在随后的()中，链接也可以带title属性，链接地址后面空一格，然后用引号引起来 简书, 是一个创作社区,任何人均可以在其上进行创作。用户在简书上面可以方便的创作自己的作品,互相交流 参数式链接的文字放在[]中，链接地址放在随后的:后，链接地址后面空一格，然后用引号引起来 简书是一个创作社区,任何人均可以在其上进行创作。用户在简书上面可以方便的创作自己的作品,互相交流。 //参数定义的其他写法 分割线至少三个字符 斜体 加粗 删除线mdmd mdmd 删除 表格//例子一 123 234 345 abc bcd cde abc bcd cde abc bcd cde //例子二 123 234 345 abc bcd cde abc bcd cde abc bcd cde //例子三 123 234 345 abc bcd cde abc bcd cde abc bcd cde]]></content>
+      <categories>
+        <category>文章</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[搭建个人博客(GitHub Pages + Hexo)]]></title>
+    <url>%2F2019%2F06%2F05%2FGitHub-Pages-Hexo%E5%86%99%E5%8D%9A%E5%AE%A2%2F</url>
+    <content type="text"><![CDATA[创建github仓库 创建一个github仓库 仓库名必须与用户名相同 之后的博客地址就是：http://username.github.io 配置sshGit可以通过https和ssh两种方式连接服务器上的仓库。ssh的方式会在传输前压缩数据，这样传输的效率很高。而且不需要每次都输入账号和密码。 git的用户名和邮箱设置 12$ git config --global user.name &quot;your name”$ git config --global user.email &quot;your email&quot; 查看本地是否有ssh密钥（有这些文件说明已经有了id_rsa，id_rsa.pubknown_hosts），如果没有就自己生成 1cd ~/.ssh 12生成ssh命令 根据提示一步步操作即可ssh-keygen -t rsa -C “your email” vim打开公钥文件 复制共钥到github的设置里面 1vim id_rsa.pub 安装Hexo环境12345678910// 安装hexonpm install hexo-cli -g// 初始化一个blog文件夹hexo init blog// 到blog文件夹下启动服务 之后就可以在http://localhost:4000 看的你的博客cd blognpm installhexo server 配置Deployment 修改blog文件夹下的_config.yml文件 1234567# Deployment## Docs: https://hexo.io/docs/deployment.html### :号后面都要有空格 否则hexo d的时候会没反应deploy:type:gitrepo:git@github.com:你的github账号/你的github账号.github.io.gitbranch:master 生成新的public文件 12hexo clean //删除旧的public文件hexo generate / hexo g //生成新的public文件 部署到github上1hexo deploye / hexo d 到此就初步完成了 在打开https://lbrjms.github.io就可以看到你的博客了 更换主题Â成功之后的第一件事就是更换主题 选择自己喜欢的主题 下载到themes文件夹下面更改_config.yml 的themes 对应的名字就可以了 下面是我clone的主题 123$ git clone https://github.com/tufu9441/maupassant-hexo.git themes/maupassant$ npm install hexo-renderer-pug --save$ npm install hexo-renderer-sass --save 开启分类 tags 123$$ hexo new page tags$ hexo new page categories 创建文章$ hexo new &quot;title&quot; 关于界面 maupassant主题里有个关于导航菜单，默认点进去是不行的，需要自己新建个。在Hexo的 source 目录新建个 about 文件夹，文件夹里按模板新建个 index.md 更改主题语言支持多种语言 去config文件里面改就可以（我找了半天才找到）其实关于一些设置的东西 大多数都在config里面改]]></content>
+      <categories>
+        <category>文章</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2019%2F06%2F05%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+  </entry>
+</search>
