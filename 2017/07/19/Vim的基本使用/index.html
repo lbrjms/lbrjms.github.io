@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>Vim的基本使用 | 青萍水袖</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/8.0.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/3.4.0/jquery.min.js"></script><link rel="icon" mask sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Vim的基本使用</h1><a id="logo" href="/.">青萍水袖</a><p class="description">做一些简单的事情 把有用的东西写下来 总有一天你能用的到</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Vim的基本使用</h1><div class="post-meta">Jul 19, 2017<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 2k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-hourglass-half"></i><span class="post-count"> 7</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>vi编辑器是所有Unix及Linux系统下标准的编辑器，它的强大不逊色于任何最新的文本编辑器，这里只是简单地介绍一下它的用法和一小部分指令。由于对Unix及Linux系统的任何版本，vi编辑器是完全相同的，因此您可以在其他任何介绍vi的地方进一步了解它。Vi也是Linux中最基本的文本编辑器，学会它后，您将在Linux的世界里畅行无阻。</p>
+<a id="more"></a>
+<p>1、vi的基本概念<br>基本上vi可以分为三种状态，分别是命令模式（command mode）、插入模式（Insert mode）和底行模式（last line mode），各模式的功能区分如下：</p>
+<p>1) 命令行模式command mode）</p>
+<p>控制屏幕光标的移动，字符、字或行的删除，移动复制某区段及进入Insert mode下，或者到 last line mode。</p>
+<p>2) 插入模式（Insert mode）</p>
+<p>只有在Insert mode下，才可以做文字输入，按「ESC」键可回到命令行模式。</p>
+<p>3) 底行模式（last line mode）</p>
+<p>将文件保存或退出vi，也可以设置编辑环境，如寻找字符串、列出行号……等。</p>
+<p>不过一般我们在使用时把vi简化成两个模式，就是将底行模式（last line mode）也算入命令行模式command mode）。</p>
+<p>2、vi的基本操作<br>a) 进入vi</p>
+<p>在系统提示符号输入vi及文件名称后，就进入vi全屏幕编辑画面：</p>
+<p>$ vi myfile</p>
+<p>不过有一点要特别注意，就是您进入vi之后，是处于「命令行模式（command mode）」，您要切换到「插入模式（Insert mode）」才能够输入文字。初次使用vi的人都会想先用上下左右键移动光标，结果电脑一直哔哔叫，把自己气个半死，所以进入vi后，先不要乱动，转换到「插入模式（Insert mode）」再说吧！</p>
+<p>b) 切换至插入模式（Insert mode）编辑文件</p>
+<p>在「命令行模式（command mode）」下按一下字母「i」就可以进入「插入模式（Insert mode）」，这时候你就可以开始输入文字了。</p>
+<p>c) Insert 的切换</p>
+<p>您目前处于「插入模式（Insert mode）」，您就只能一直输入文字，如果您发现输错了字！想用光标键往回移动，将该字删除，就要先按一下「ESC」键转到「命令行模式（command mode）」再删除文字。</p>
+<p>d) 退出vi及保存文件</p>
+<p>在「命令行模式（command mode）」下，按一下「：」冒号键进入「Last line mode」，例如：</p>
+<p>: w filename （输入 「w filename」将文章以指定的文件名filename保存）</p>
+<p>: wq (输入「wq」，存盘并退出vi)</p>
+<p>: q! (输入q!， 不存盘强制退出vi)</p>
+<p>3、命令行模式（command mode）功能键<br>1）. 插入模式</p>
+<p>按「i」切换进入插入模式「insert mode」，按“i”进入插入模式后是从光标当前位置开始输入文件；</p>
+<p>按「a」进入插入模式后，是从目前光标所在位置的下一个位置开始输入文字；</p>
+<p>按「o」进入插入模式后，是插入新的一行，从行首开始输入文字。</p>
+<p>2）. 从插入模式切换为命令行模式</p>
+<p>按「ESC」键。</p>
+<p>3）. 移动光标</p>
+<p>vi可以直接用键盘上的光标来上下左右移动，但正规的vi是用小写英文字母「h」、「j」、「k」、「l」，分别控制光标左、下、上、右移一格。</p>
+<p>按「ctrl」+「b」：屏幕往“后”移动一页。</p>
+<p>按「ctrl」+「f」：屏幕往“前”移动一页。</p>
+<p>按「ctrl」+「u」：屏幕往“后”移动半页。</p>
+<p>按「ctrl」+「d」：屏幕往“前”移动半页。</p>
+<p>按数字「0」：移到文章的开头。</p>
+<p>按「G」：移动到文章的最后。</p>
+<p>按「$」：移动到光标所在行的“行尾”。</p>
+<p>按「^」：移动到光标所在行的“行首”</p>
+<p>按「w」：光标跳到下个字的开头</p>
+<p>按「e」：光标跳到下个字的字尾</p>
+<p>按「b」：光标回到上个字的开头</p>
+<p>按「#l」：光标移到该行的第#个位置，如：5l,56l。</p>
+<p>4）. 删除文字</p>
+<p>「x」：每按一次，删除光标所在位置的“后面”一个字符。</p>
+<p>「#x」：例如，「6x」表示删除光标所在位置的“后面”6个字符。</p>
+<p>「X」：大写的X，每按一次，删除光标所在位置的“前面”一个字符。</p>
+<p>「#X」：例如，「20X」表示删除光标所在位置的“前面”20个字符。</p>
+<p>「dd」：删除光标所在行。</p>
+<p>「#dd」：从光标所在行开始删除#行</p>
+<p>5）. 复制</p>
+<p>「yw」：将光标所在之处到字尾的字符复制到缓冲区中。</p>
+<p>「#yw」：复制#个字到缓冲区</p>
+<p>「yy」：复制光标所在行到缓冲区。</p>
+<p>「#yy」：例如，「6yy」表示拷贝从光标所在的该行“往下数”6行文字。</p>
+<p>「p」：将缓冲区内的字符贴到光标所在位置。注意：所有与“y”有关的复制命令都必须与“p”配合才能完成复制与粘贴功能。</p>
+<p>6）. 替换</p>
+<p>「r」：替换光标所在处的字符。</p>
+<p>「R」：替换光标所到之处的字符，直到按下「ESC」键为止。</p>
+<p>7）. 回复上一次操作</p>
+<p>「u」：如果您误执行一个命令，可以马上按下「u」，回到上一个操作。按多次“u”可以执行多次回复。</p>
+<p>8）. 更改</p>
+<p>「cw」：更改光标所在处的字到字尾处</p>
+<p>「c#w」：例如，「c3w」表示更改3个字</p>
+<p>9）. 跳至指定的行</p>
+<p>「ctrl」+「g」列出光标所在行的行号。</p>
+<p>「#G」：例如，「15G」，表示移动光标至文章的第15行行首。</p>
+<p>4、Last line mode下命令简介<br>在使用「last line mode」之前，请记住先按「ESC」键确定您已经处于「command mode」下后，再按「：」冒号即可进入「last line mode」。</p>
+<p>A) 列出行号</p>
+<p>「set nu」：输入「set nu」后，会在文件中的每一行前面列出行号。</p>
+<p>B) 跳到文件中的某一行</p>
+<p>「#」：「#」号表示一个数字，在冒号后输入一个数字，再按回车键就会跳到该行了，如输入数字15，再回车，就会跳到文章的第15行。</p>
+<p>C) 查找字符</p>
+<p>「/关键字」：先按「/」键，再输入您想寻找的字符，如果第一次找的关键字不是您想要的，可以一直按「n」会往后寻找到您要的关键字为止。</p>
+<p>「?关键字」：先按「?」键，再输入您想寻找的字符，如果第一次找的关键字不是您想要的，可以一直按「n」会往前寻找到您要的关键字为止。</p>
+<p>D) 保存文件</p>
+<p>「w」：在冒号输入字母「w」就可以将文件保存起来。</p>
+<p>E) 离开vi</p>
+<p>「q」：按「q」就是退出，如果无法离开vi，可以在「q」后跟一个「!」强制离开vi。</p>
+<p>「qw」：一般建议离开时，搭配「w」一起使用，这样在退出的时候还可以保存文件。</p>
+<p>5、vi命令列表<br>1、下表列出命令模式下的一些键的功能：</p>
+<p>h
+左移光标一个字符</p>
+<p>l
+右移光标一个字符</p>
+<p>k
+光标上移一行</p>
+<p>j
+光标下移一行</p>
+<p>^
+光标移动至行首</p>
+<p>0
+数字“0”，光标移至文章的开头</p>
+<p>G
+光标移至文章的最后</p>
+<p>$
+光标移动至行尾</p>
+<p>Ctrl+f<br>向前翻屏</p>
+<p>Ctrl+b<br>向后翻屏</p>
+<p>Ctrl+d<br>向前翻半屏</p>
+<p>Ctrl+u<br>向后翻半屏</p>
+<p>i
+在光标位置前插入字符</p>
+<p>a
+在光标所在位置的后一个字符开始增加</p>
+<p>o
+插入新的一行，从行首开始输入</p>
+<p>ESC<br>从输入状态退至命令状态</p>
+<p>x
+删除光标后面的字符</p>
+<p>#x<br>删除光标后的＃个字符</p>
+<p>X
+(大写X)，删除光标前面的字符</p>
+<p>#X<br>删除光标前面的#个字符</p>
+<p>dd<br>删除光标所在的行</p>
+<p>#dd<br>删除从光标所在行数的#行</p>
+<p>yw<br>复制光标所在位置的一个字</p>
+<p>#yw<br>复制光标所在位置的#个字</p>
+<p>yy<br>复制光标所在位置的一行</p>
+<p>#yy<br>复制从光标所在行数的#行</p>
+<p>p
+粘贴</p>
+<p>u
+取消操作</p>
+<p>cw<br>更改光标所在位置的一个字</p>
+<p>#cw<br>更改光标所在位置的#个字</p>
+</div><iframe src="/donate/?AliPayQR=/img/AliPayQR.png&amp;WeChatQR=/img/WeChatQR.png&amp;GitHub=null&amp;BTCQR=null&amp;BTCKEY=null&amp;PayPal=null" style="overflow-x:hidden; overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;" frameborder="0" scrolling="no"></iframe><div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>WJ</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="/2017/07/19/Vim的基本使用/">http://lbrjms.github.io/2017/07/19/Vim的基本使用/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！</li></ul></div><br><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a class="article-share-link" data-url="http://lbrjms.github.io/2017/07/19/Vim的基本使用/" data-id="cjwt0hpm4001bqmurnvn7prsa" data-qrcode="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3aQY7DIAwF0N7/0pntSKOk34aMBDxWVUsoLwsLG38+8bh+jb/f5/PvZiZrThgYGBjLMq7H8TwnX/9uner3t/+OgYFxACP5+zwEPz+bB/FkbxgYGBi9pZ/D8V1IxcDAwJgbcKsbeiNYY2BgnMZIktgkKU3KZ89p8Ou5OAYGxoKMXsnsfz6/cr+BgYGxFOMqjnydWeE42hUGBsbWjDzA9ZoneqTmfjAwMDZljLRB5JvuBegCDAMD4xjGrMaI6tZzwO2vGBgYWzOqD1RbKJItVlPc218xMDAOY/Qw40FzpLSHgYGxN6PcgFVs4Rpp/JqQ0GJgYGzE6LVfVAtn1SpZ3kCGgYGxNyMv91cT15GLyWa5DQMDYzvGrOvJ3gVDoZSWZ+EYGBjbMarhr4rMC2d54W/CGRYDA2MpxkizRfUN5elo+biJgYFxAGOkzXSkoFYN5UNvCAMDY3FG8nC+6ST5zNtYozsNDAyMrRk5IA+11UuFvL31CxUDA+NgRhLZ8vbW3mrRa8LAwDiA0bt07IXUkZlfzrkYGBhbM3qHvDzgVrPO6goYGBi7Mq7iSEpveXFtVqqMgYGxN6PXKvFG41fvjFfGYGBgLMuoFrnyq81qKK82c5TfNAYGxuKMXpKZM8ZLbIX7DQwMDIwg+cyp+ZxKCREDA+N0xtuXBM0UGgMD4wBGs200PiAmoTYPuBgYGKcxeqnjrHaxPK2dfHzEwMBYg/EDhEkNyx4Q8pMAAAAASUVORK5CYII=">分享</a><div class="tags"><a href="/tags/Linux/">Linux</a></div><div class="post-nav"><a class="pre" href="/2017/07/21/Swift小知识/">Swift小知识</a><a class="next" href="/2017/07/06/Travis-CI动态编译GitHub仓库/">Travis_CI动态编译GitHub仓库</a></div></div></div></div><div class="pure-u-1 pure-u-md-1-4"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/shell-Android/">shell,Android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/文章/">文章</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/AR/" style="font-size: 15px;">AR</a> <a href="/tags/Pod/" style="font-size: 15px;">Pod</a> <a href="/tags/Android/" style="font-size: 15px;">Android</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/机器学习/" style="font-size: 15px;">机器学习</a> <a href="/tags/Apache/" style="font-size: 15px;">Apache</a> <a href="/tags/Swift/" style="font-size: 15px;">Swift</a> <a href="/tags/Runloop/" style="font-size: 15px;">Runloop</a> <a href="/tags/iOS/" style="font-size: 15px;">iOS</a> <a href="/tags/Travis/" style="font-size: 15px;">Travis</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/ios/" style="font-size: 15px;">ios</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/06/12/Cocoapods制作自己的Pod库/">Cocoapods制作自己的Pod库</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/06/RSS订阅打开都是xml的问题/">RSS订阅打开都是xml的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/05/md语法/">MD常用语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/05/GitHub-Pages-Hexo写博客/">Hexo + GitHubPages搭建个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/05/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/08/Unity gameobject 的 生命周期/">Unity gameobject 的 生命周期</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/08/全局Pop 隐藏TabBar NavigationBar/">全局Pop 隐藏TabBar NavigationBar</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/26/各种地图的坐标转换/">各种地图的坐标转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/26/Runloop/">Runloop</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/26/CoreMLtest/">CoreMLtest</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://lbrjms.github.io" title="我的主页" target="_blank">我的主页</a><ul></ul><a href="https://laodaoduo.github.io" title="之前的文章" target="_blank">之前的文章</a><ul></ul><a href="https://www.cnblogs.com/dlwj/" title="我的博客园" target="_blank">我的博客园</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">青萍水袖.</a></div><!--  |  Powered by--><!--  a(rel='nofollow', target='_blank', href='https://github.com/tufu9441/maupassant-hexo')  Theme--><!--  |  by--><!--  a(rel='nofollow', target='_blank', href='https://github.com/pagecho')  Cho.--></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+   search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
