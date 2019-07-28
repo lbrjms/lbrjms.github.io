@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[swift for循环]]></title>
+    <url>%2F2019%2F07%2F25%2Fswift-for%E5%BE%AA%E7%8E%AF%2F</url>
+    <content type="text"><![CDATA[12345678910111213141516171819202122232425// &lt;font color=&quot;red&quot;&gt;闭区间&lt;/font&gt; let arr = [1, 32, 2, 3, 4] for i in 1...3 &#123; i &#125; // 前闭后开 for j in 1..&lt;3 &#123; j &#125; // 返回元组 for (i, value) in arr.enumerated() &#123; i value &#125; // 跳步循环 for i in stride(from: -5, to: 5, by: 0.1) &#123; sin(i) &#125; // 反向循环 for p in arr.reversed() &#123; p &#125; 闭区间]]></content>
+      <tags>
+        <tag>swift</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[iOS更换项目名]]></title>
     <url>%2F2019%2F07%2F19%2FiOS%E6%9B%B4%E6%8D%A2%E9%A1%B9%E7%9B%AE%E5%90%8D%2F</url>
     <content type="text"><![CDATA[123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657# encoding: UTF-8#!/usr/bin/rubyrequire &apos;fileutils&apos;require &apos;active_support/all&apos;OLD_PREFIX = &quot;SetNickNameVC&quot;NEW_PREFIX = &quot;LHGJResetPswVC&quot;FOLDER_EXCLUDE = [&quot;Pods&quot;, &quot;.framework&quot;]CONTENT_EXCLUDE = [&quot;.xcuserstate&quot;, &quot;.a&quot;, &quot;.mp3&quot;, &quot;.avi&quot;, &quot;.mp4&quot;, &quot;.wmv&quot;, &quot;.webp&quot;, &quot;.png&quot;, &quot;.jpg&quot;, &quot;.rb&quot;]# REGEXP = &quot;([^a-zA-Z_0-9]|^)#&#123;OLD_PREFIX&#125;([A-Z].*?)&quot;REGEXP = &quot;#&#123;OLD_PREFIX&#125;(.*?)&quot;NEW_STRING = &apos;\1&apos;+NEW_PREFIX+&apos;\2&apos;def search(dir) Dir[File.join(dir, &apos;*&apos;)].each do |file| unless FOLDER_EXCLUDE.include?(File.extname(file).empty? ? File.basename(file) : File.extname(file)) # 非排除的文件夹，才进入搜索 if File.directory?(file) search(file) end end if File.file?(file) search_content(file) end filename = File.basename(file) new_filename = filename.gsub(Regexp.new(REGEXP), NEW_STRING) if filename != new_filename dirname = File.dirname(file) new_file = File.join(dirname, new_filename) puts &quot;重命名文件: #&#123;file&#125; -&gt; #&#123;new_file&#125;&quot; File.rename(file, new_file) end endenddef search_content(file) # 不对排查的文件进行内容替换 return if CONTENT_EXCLUDE.include?(File.extname(file)) encoding = `file -I &quot;#&#123;file&#125;&quot;`.strip.split(&apos;charset=&apos;).last encoding = &quot;utf-8&quot; if encoding.empty? puts &quot;分析: #&#123;file&#125; (#&#123;encoding&#125;)&quot; content = File.open(file, &quot;rb:#&#123;encoding&#125;&quot;, &amp;:read) reg = Regexp.new(REGEXP.encode(encoding)) new_content = content.gsub(reg, NEW_STRING.encode(encoding)) if content != new_content File.open(file, &quot;w:UTF-8&quot;) do |f| f.write(new_content) end puts &quot;更新文件内容: #&#123;file&#125;&quot; endendsearch(Dir.pwd) 将以上脚本copy到rename.rb文件放在项目目录下 OLD_PREFIX、 NEW_PREFIX 分别填写你想要改的名字 执行 ruby rename.rb 即可 如果项目集成了cocoapod这时候会报错 只需要重新pod install即可]]></content>
