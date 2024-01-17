@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>微前端之qiankun | Hexo</title>
+  <meta name="description" content="主应用基座（主应用）负责导航的渲染和登录态的下发，为子应用提供一个挂载的容器div，基座应该保持简洁（qiankun官方demo甚至直接使用原生html搭建），不应该做涉及业务的操作 主应用注册微应用123456789101112131415161718import &amp;#123; registerMicroApps, start &amp;#125; from &amp;#x27;qiankun&amp;#x27;;re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微前端之qiankun">
+<meta property="og:url" content="http://example.com/2023/04/14/%E5%BE%AE%E5%89%8D%E7%AB%AF%E4%B9%8Bqiankun/index.html">
+<meta property="og:site_name" content="WJ">
+<meta property="og:description" content="主应用基座（主应用）负责导航的渲染和登录态的下发，为子应用提供一个挂载的容器div，基座应该保持简洁（qiankun官方demo甚至直接使用原生html搭建），不应该做涉及业务的操作 主应用注册微应用123456789101112131415161718import &amp;#123; registerMicroApps, start &amp;#125; from &amp;#x27;qiankun&amp;#x27;;re">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-14T09:47:51.000Z">
+<meta property="article:modified_time" content="2023-12-19T08:01:29.785Z">
+<meta property="article:author" content="WJ Liu">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2023/04/14/%E5%BE%AE%E5%89%8D%E7%AB%AF%E4%B9%8Bqiankun/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="WJ" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/lbrjms" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">昵称</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web &amp; iOS Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shanghai, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/lbrjms" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/EMQX-mqtt/">EMQX, mqtt</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/EMS/">EMS</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FUXA-mqtt-web%E7%BB%84%E6%80%81/">FUXA, mqtt, web组态</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iot/">iot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/qt/">qt</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vim/">vim</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vscode/">vscode</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA/">个人</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%BE-2d/">图, 2d</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E5%89%8D%E7%AB%AF/">微前端</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%84%E6%80%81/">组态</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js-range/" rel="tag">js, range</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mxgraph/" rel="tag">mxgraph</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95/" rel="tag">vue, 断点调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-router/" rel="tag">vue-router</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%A9%E6%A8%A1%E5%9E%8B/" rel="tag">物模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/js/" style="font-size: 13px;">js</a> <a href="/tags/js-range/" style="font-size: 13px;">js, range</a> <a href="/tags/mxgraph/" style="font-size: 13px;">mxgraph</a> <a href="/tags/redis/" style="font-size: 13px;">redis</a> <a href="/tags/springboot/" style="font-size: 13px;">springboot</a> <a href="/tags/vscode/" style="font-size: 13px;">vscode</a> <a href="/tags/vue-%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95/" style="font-size: 13px;">vue, 断点调试</a> <a href="/tags/vue-router/" style="font-size: 13px;">vue-router</a> <a href="/tags/web/" style="font-size: 13px;">web</a> <a href="/tags/webpack/" style="font-size: 13px;">webpack</a> <a href="/tags/%E7%89%A9%E6%A8%A1%E5%9E%8B/" style="font-size: 13px;">物模型</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 13px;">递归</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/go/">go</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/01/17/go%E5%9F%BA%E7%A1%80/" class="title">go基础</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-01-17T08:33:18.000Z" itemprop="datePublished">2024-01-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/vscode/">vscode</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/01/08/%E5%88%9B%E5%BB%BAvscode%E4%B8%BB%E9%A2%98%E5%B9%B6%E5%8F%91%E5%B8%83%E5%88%B0%E6%8F%92%E4%BB%B6%E5%B8%82%E5%9C%BA/" class="title">创建vscode主题并发布到插件市场</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-01-08T08:14:04.000Z" itemprop="datePublished">2024-01-08</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/27/%E5%B8%B8%E7%94%A8%E6%A8%A1%E6%9D%BF%E9%A1%B9%E7%9B%AE%E8%B0%83%E7%A0%94/" class="title">常用模板项目调研</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-27T08:16:52.000Z" itemprop="datePublished">2023-12-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/FUXA-mqtt-web%E7%BB%84%E6%80%81/">FUXA, mqtt, web组态</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/25/FUXA%E8%BF%9E%E6%8E%A5mqtt%E6%90%AD%E5%BB%BA%E7%BB%84%E6%80%81%E5%BA%94%E7%94%A8/" class="title">FUXA连接mqtt搭建组态应用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-25T07:36:35.000Z" itemprop="datePublished">2023-12-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/EMQX-mqtt/">EMQX, mqtt</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/24/EMQX/" class="title">EMQX</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-24T09:17:26.000Z" itemprop="datePublished">2023-12-24</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-微前端之qiankun" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      微前端之qiankun
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2023/04/14/%E5%BE%AE%E5%89%8D%E7%AB%AF%E4%B9%8Bqiankun/" class="article-date">
+	  <time datetime="2023-04-14T09:47:51.000Z" itemprop="datePublished">2023-04-14</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E5%BE%AE%E5%89%8D%E7%AB%AF/">微前端</a>
+  </span>
+
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/04/14/%E5%BE%AE%E5%89%8D%E7%AB%AF%E4%B9%8Bqiankun/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="主应用"><a href="#主应用" class="headerlink" title="主应用"></a>主应用</h2><p>基座（主应用）负责导航的渲染和登录态的下发，为子应用提供一个挂载的容器div，基座应该保持简洁（qiankun官方demo甚至直接使用原生html搭建），不应该做涉及业务的操作</p>
+<h2 id="主应用注册微应用"><a href="#主应用注册微应用" class="headerlink" title="主应用注册微应用"></a>主应用注册微应用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import &#123; registerMicroApps, start &#125; from &#x27;qiankun&#x27;;</span><br><span class="line"></span><br><span class="line">registerMicroApps([</span><br><span class="line">  &#123;</span><br><span class="line">    name: &#x27;react app&#x27;, // app name registered</span><br><span class="line">    entry: &#x27;//localhost:7100&#x27;,</span><br><span class="line">    container: &#x27;#yourContainer&#x27;,</span><br><span class="line">    activeRule: &#x27;/yourActiveRule&#x27;,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: &#x27;vue app&#x27;,</span><br><span class="line">    entry: &#123; scripts: [&#x27;//localhost:7100/main.js&#x27;] &#125;,</span><br><span class="line">    container: &#x27;#yourContainer2&#x27;,</span><br><span class="line">    activeRule: &#x27;/yourActiveRule2&#x27;,</span><br><span class="line">  &#125;,</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line">start();</span><br></pre></td></tr></table></figure>
+
+<h2 id="微应用导出周期函数"><a href="#微应用导出周期函数" class="headerlink" title="微应用导出周期函数"></a>微应用导出周期函数</h2><p>微应用需要在自己的入口 js (通常就是你配置的 webpack 的 entry js) 导出 bootstrap、mount、unmount 三个生命周期钩子，以供主应用在适当的时机调用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * bootstrap 只会在微应用初始化的时候调用一次，下次微应用重新进入时会直接调用 mount 钩子，不会再重复触发 bootstrap。</span><br><span class="line"> * 通常我们可以在这里做一些全局变量的初始化，比如不会在 unmount 阶段被销毁的应用级别的缓存等。</span><br><span class="line"> */</span><br><span class="line">export async function bootstrap() &#123;</span><br><span class="line">  console.log(&#x27;react app bootstraped&#x27;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 应用每次进入都会调用 mount 方法，通常我们在这里触发应用的渲染方法</span><br><span class="line"> */</span><br><span class="line">export async function mount(props) &#123;</span><br><span class="line">  ReactDOM.render(&lt;App /&gt;, props.container ? props.container.querySelector(&#x27;#root&#x27;) : document.getElementById(&#x27;root&#x27;));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 应用每次 切出/卸载 会调用的方法，通常在这里我们会卸载微应用的应用实例</span><br><span class="line"> */</span><br><span class="line">export async function unmount(props) &#123;</span><br><span class="line">  ReactDOM.unmountComponentAtNode(</span><br><span class="line">    props.container ? props.container.querySelector(&#x27;#root&#x27;) : document.getElementById(&#x27;root&#x27;),</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 可选生命周期钩子，仅使用 loadMicroApp 方式加载微应用时生效</span><br><span class="line"> */</span><br><span class="line">export async function update(props) &#123;</span><br><span class="line">  console.log(&#x27;update props&#x27;, props);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="配置微应用打包工具"><a href="#配置微应用打包工具" class="headerlink" title="配置微应用打包工具"></a>配置微应用打包工具</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const &#123; name &#125; = require(&#x27;./package&#x27;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    headers: &#123;</span><br><span class="line">      &#x27;Access-Control-Allow-Origin&#x27;: &#x27;*&#x27;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  configureWebpack: &#123;</span><br><span class="line">    output: &#123;</span><br><span class="line">      library: `$&#123;name&#125;-[name]`,</span><br><span class="line">      libraryTarget: &#x27;umd&#x27;, // 把微应用打包成 umd 库格式</span><br><span class="line">      jsonpFunction: `webpackJsonp_$&#123;name&#125;`,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="webpack打包设置-webpack-public-path"><a href="#webpack打包设置-webpack-public-path" class="headerlink" title="webpack打包设置 webpack_public_path"></a>webpack打包设置 <strong>webpack_public_path</strong></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (window.__POWERED_BY_QIANKUN__) &#123;</span><br><span class="line">  __webpack_public_path__ = window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="vue3-vite-问题微前端解决方案"><a href="#vue3-vite-问题微前端解决方案" class="headerlink" title="vue3+vite 问题微前端解决方案"></a>vue3+vite 问题微前端解决方案</h2><p><a target="_blank" rel="noopener" href="https://github.com/tengmaoqing/vite-plugin-qiankun/tree/master">https://github.com/tengmaoqing/vite-plugin-qiankun/tree/master</a></p>
+<h2 id="微应用之间传值"><a href="#微应用之间传值" class="headerlink" title="微应用之间传值"></a>微应用之间传值</h2><ul>
+<li>props</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  name:&#x27;subapp&#x27;,</span><br><span class="line">  entry:&#x27;//localhost:10200&#x27;,</span><br><span class="line">  container:&#x27;#microApp&#x27;,</span><br><span class="line">  activeRule:&#x27;/subapp&#x27;,</span><br><span class="line">  props: &#123;</span><br><span class="line">    test:&#x27;测试主应用传值&#x27;,</span><br><span class="line">    parentActions:actions</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>手动加载或者注册子应用的时候把需要传的值带过去</p>
+<ul>
+<li>actions 发布-订阅的设计模式</li>
+</ul>
+<p>类似于watch监听 qiankun框架提供一套中间状态池 不同的子应用可以改变池子中的状态 监听状态的应用都会收到状态变化实现应用之间的传值</p>
+<p>主应用构建状态池</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import &#123;</span><br><span class="line">  initGlobalState</span><br><span class="line">&#125; from &#x27;qiankun&#x27;;</span><br><span class="line"></span><br><span class="line">var state = &#123;</span><br><span class="line">  num: 1</span><br><span class="line">&#125;;</span><br><span class="line">// 初始化 state</span><br><span class="line">const actions = initGlobalState(state);</span><br><span class="line">actions.onGlobalStateChange((stat, prev) =&gt; &#123;</span><br><span class="line">  console.log(&#x27;主应用检测到state变更：&#x27;, stat, prev);</span><br><span class="line">  state.num = stat.num</span><br><span class="line">&#125;);</span><br><span class="line">// 你还可以定义一个获取state的方法下发到子应用</span><br><span class="line">actions.getGlobalState = function () &#123;</span><br><span class="line">  return state</span><br><span class="line">&#125;</span><br><span class="line">export default actions;</span><br></pre></td></tr></table></figure>
+<p>props 下发到子应用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  name:&#x27;subapp&#x27;,</span><br><span class="line">  entry:&#x27;//localhost:10200&#x27;,</span><br><span class="line">  container:&#x27;#microApp&#x27;,</span><br><span class="line">  activeRule:&#x27;/subapp&#x27;,</span><br><span class="line">  props: &#123;</span><br><span class="line">    test:&#x27;测试主应用传值&#x27;,</span><br><span class="line">    parentActions:actions</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>子应用中全局app（vue）中引用状态池</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function render(props = &#123;&#125;) &#123;</span><br><span class="line">  const &#123; container &#125; = props;</span><br><span class="line"></span><br><span class="line">  console.log(&#x27;props :&#x27;, props);</span><br><span class="line">  instance = new Vue(&#123;</span><br><span class="line">    router,</span><br><span class="line">    store,</span><br><span class="line">    // 挂载在根节点上</span><br><span class="line">    data()&#123;</span><br><span class="line">      return &#123;</span><br><span class="line">        test: props.test,</span><br><span class="line">        parentActions: props.parentActions,</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    render: (h) =&gt; h(App),</span><br><span class="line">  &#125;).$mount(container ? container.querySelector(&#x27;#app&#x27;) : &#x27;#app&#x27;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>子应用需要更新的时候更新状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">changeMainData()&#123;</span><br><span class="line">      console.log(&#x27;=====&gt; :&#x27;,this.$root.parentActions);</span><br><span class="line">      let a = this.$root.parentActions.getGlobalState().num</span><br><span class="line">      a = a + 1</span><br><span class="line">      this.$root.parentActions.setGlobalState(&#123;num: a&#125;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>其他应用设置监听的话 就能得到状态变化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mounted() &#123;</span><br><span class="line">   this.state = actions.getGlobalState().num</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure>
+
+<h2 id="vite应用静态资源404"><a href="#vite应用静态资源404" class="headerlink" title="vite应用静态资源404"></a>vite应用静态资源404</h2><p>vit.config 文件添加下面配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server: &#123;</span><br><span class="line">  origin: &#x27;http://localhost:5173&#x27;, //项目baseUrl，解决主应用中出现静态地址404问题</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h2 id="封装全局数据"><a href="#封装全局数据" class="headerlink" title="封装全局数据"></a>封装全局数据</h2><p>把全局下发的数据封装到通用的数据存储中 里面封装的store 来保存全局数据 这样不管数据是主应用下发的还是单独启动子应用获取 对于使用者来说 不需要关心 数据来自哪里 只要从封装的store上取数据就好了</p>
+<h2 id="子应用独立仓库"><a href="#子应用独立仓库" class="headerlink" title="子应用独立仓库"></a>子应用独立仓库</h2><p>随着项目发展，子应用可能会越来越多，如果子应用和基座都集合在同一个git仓库，就会越来越臃肿。</p>
+<p>若项目有CI&#x2F;CD，只修改了某个子应用的代码，但代码提交会同时触发所有子应用构建，牵一发动全身，是不合理的。</p>
+<p>同时，如果某些业务的子应用的开发是跨部门跨团队的，代码仓库如何分权限管理又是一个问题。</p>
+<h2 id="子项目之间的公共插件如何共享"><a href="#子项目之间的公共插件如何共享" class="headerlink" title="子项目之间的公共插件如何共享"></a>子项目之间的公共插件如何共享</h2><p>巨无霸应用的公共依赖和公共函数被太多的页面使用，导致升级和改动困难，使用微前端可以让各个子项目独立拥有自己的依赖，互不干扰。而我们想要复用公共依赖，这与微前端的理念是相悖的。</p>
+<p>所以我的想法是：父项目提供公共依赖，子项目可以自由选择用或者不用。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2023/04/14/%E5%BE%AE%E5%89%8D%E7%AB%AF%E4%B9%8Bqiankun/" title="微前端之qiankun" target="_blank" rel="external">http://example.com/2023/04/14/微前端之qiankun/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/lbrjms" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/lbrjms" target="_blank"><span class="text-dark">昵称</span><small class="ml-1x">Web &amp; iOS Developer</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2023/04/15/php%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="php之环境搭建"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2023/04/14/%E5%BE%AE%E5%89%8D%E7%AB%AF%E8%B0%83%E7%A0%94/" title="微前端调研"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/al_pay.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wx_pay.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/lbrjms" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

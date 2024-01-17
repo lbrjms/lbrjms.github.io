@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>js之常用全局函数和语句 | Hexo</title>
+  <meta name="description" content="编码函数12345decodeURI() &#x2F;&#x2F;和&#x2F;*...*&#x2F;(注释)decodeURIComponent() constencodeURI() varencodeURIComponent()escape() 编码函数的作用是把字符串转换成能用作统一资源标识符(Uniform Resource Identifier)的版本，例如网页地址或服务器 CGI 脚本的调用。拉丁字母数字字符组在编码处理后不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js之常用全局函数和语句">
+<meta property="og:url" content="http://example.com/2023/03/29/js%E4%B9%8B%E5%B8%B8%E7%94%A8%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0%E5%92%8C%E8%AF%AD%E5%8F%A5/index.html">
+<meta property="og:site_name" content="WJ">
+<meta property="og:description" content="编码函数12345decodeURI() &#x2F;&#x2F;和&#x2F;*...*&#x2F;(注释)decodeURIComponent() constencodeURI() varencodeURIComponent()escape() 编码函数的作用是把字符串转换成能用作统一资源标识符(Uniform Resource Identifier)的版本，例如网页地址或服务器 CGI 脚本的调用。拉丁字母数字字符组在编码处理后不">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-29T07:08:20.000Z">
+<meta property="article:modified_time" content="2023-12-19T08:01:29.779Z">
+<meta property="article:author" content="WJ Liu">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2023/03/29/js%E4%B9%8B%E5%B8%B8%E7%94%A8%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0%E5%92%8C%E8%AF%AD%E5%8F%A5/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="WJ" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/lbrjms" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">昵称</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web &amp; iOS Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shanghai, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/lbrjms" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/EMQX-mqtt/">EMQX, mqtt</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/EMS/">EMS</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FUXA-mqtt-web%E7%BB%84%E6%80%81/">FUXA, mqtt, web组态</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iot/">iot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/qt/">qt</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vim/">vim</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vscode/">vscode</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA/">个人</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%BE-2d/">图, 2d</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E5%89%8D%E7%AB%AF/">微前端</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%84%E6%80%81/">组态</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js-range/" rel="tag">js, range</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mxgraph/" rel="tag">mxgraph</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95/" rel="tag">vue, 断点调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-router/" rel="tag">vue-router</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%A9%E6%A8%A1%E5%9E%8B/" rel="tag">物模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/js/" style="font-size: 13px;">js</a> <a href="/tags/js-range/" style="font-size: 13px;">js, range</a> <a href="/tags/mxgraph/" style="font-size: 13px;">mxgraph</a> <a href="/tags/redis/" style="font-size: 13px;">redis</a> <a href="/tags/springboot/" style="font-size: 13px;">springboot</a> <a href="/tags/vscode/" style="font-size: 13px;">vscode</a> <a href="/tags/vue-%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95/" style="font-size: 13px;">vue, 断点调试</a> <a href="/tags/vue-router/" style="font-size: 13px;">vue-router</a> <a href="/tags/web/" style="font-size: 13px;">web</a> <a href="/tags/webpack/" style="font-size: 13px;">webpack</a> <a href="/tags/%E7%89%A9%E6%A8%A1%E5%9E%8B/" style="font-size: 13px;">物模型</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 13px;">递归</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/go/">go</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/01/17/go%E5%9F%BA%E7%A1%80/" class="title">go基础</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-01-17T08:33:18.000Z" itemprop="datePublished">2024-01-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/vscode/">vscode</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/01/08/%E5%88%9B%E5%BB%BAvscode%E4%B8%BB%E9%A2%98%E5%B9%B6%E5%8F%91%E5%B8%83%E5%88%B0%E6%8F%92%E4%BB%B6%E5%B8%82%E5%9C%BA/" class="title">创建vscode主题并发布到插件市场</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-01-08T08:14:04.000Z" itemprop="datePublished">2024-01-08</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/27/%E5%B8%B8%E7%94%A8%E6%A8%A1%E6%9D%BF%E9%A1%B9%E7%9B%AE%E8%B0%83%E7%A0%94/" class="title">常用模板项目调研</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-27T08:16:52.000Z" itemprop="datePublished">2023-12-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/FUXA-mqtt-web%E7%BB%84%E6%80%81/">FUXA, mqtt, web组态</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/25/FUXA%E8%BF%9E%E6%8E%A5mqtt%E6%90%AD%E5%BB%BA%E7%BB%84%E6%80%81%E5%BA%94%E7%94%A8/" class="title">FUXA连接mqtt搭建组态应用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-25T07:36:35.000Z" itemprop="datePublished">2023-12-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/EMQX-mqtt/">EMQX, mqtt</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/24/EMQX/" class="title">EMQX</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-24T09:17:26.000Z" itemprop="datePublished">2023-12-24</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-js之常用全局函数和语句" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js之常用全局函数和语句
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2023/03/29/js%E4%B9%8B%E5%B8%B8%E7%94%A8%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0%E5%92%8C%E8%AF%AD%E5%8F%A5/" class="article-date">
+	  <time datetime="2023-03-29T07:08:20.000Z" itemprop="datePublished">2023-03-29</time>
+	</a>
+</span>
+        
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/03/29/js%E4%B9%8B%E5%B8%B8%E7%94%A8%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0%E5%92%8C%E8%AF%AD%E5%8F%A5/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="编码函数"><a href="#编码函数" class="headerlink" title="编码函数"></a>编码函数</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">decodeURI() //和/*...*/(注释)</span><br><span class="line">decodeURIComponent() const</span><br><span class="line">encodeURI() var</span><br><span class="line">encodeURIComponent()</span><br><span class="line">escape()</span><br></pre></td></tr></table></figure>
+<p>编码函数的作用是把字符串转换成能用作统一资源标识符(Uniform Resource Identifier)的<br>版本，例如网页地址或服务器 CGI 脚本的调用。拉丁字母数字字符组在编码处理后不会改变，<br>但某些符号和其他 Unicode 字符必须使用编码函数转换成 Internet 能传输的格式(字符数字的十<br>六进制表示)。例如，空格字符必须编码成十六进制形式：%20。<br>encodeURI()和 escape()函数(还有 decodeURI()和 unescape())的最大区别在于，现代版本的<br>浏览器不对大量符号进行编码，因为根据 RFC2396(<a target="_blank" rel="noopener" href="http://www.ietf.org/rfc/rfc2396.txt)%E6%8E%A8%E8%8D%90%E7%9A%84%E8%AF%AD">http://www.ietf.org/rfc/rfc2396.txt)推荐的语</a><br>法，它们可用作 URI 字符。因此，不通过 encodeURI()函数来编码下面的字符：<br>; &#x2F; ? : @ &amp; &#x3D; + $ , - _ . ! ∼ * ‘ ( ) #<br>encodeURI()和 decodeURI()函数只能在完整的 URI 中使用。可用的 URI 可以是相对地址或<br>绝对地址，但这两个函数是连接在一起的，所以不编码 URI 中的协议(:&#x2F;&#x2F;)、搜索字符串(例如?<br>和&#x3D;)和目录层次分隔符(&#x2F;)。decodeURI()函数能处理从服务器传来的页面地址 URI，但注意，有<br>些服务器的 CGI 程序把空格编码成加号(+)，但 JavaScript 函数不能把加号解码回空格。如果脚<br>本需要解码的 URI 用加号代替空格，则需要通过一个字符串替代方法来运行解码的 URI，来完<br>成这项工作(这里使用正则表达式比较方便)。如果要解码的 URI 字符串是用脚本编码的，则只<br>有通过相应的编码函数进行编码的 URI，才使用解码函数。不要试图对使用旧 escape()函数创<br>建的 URI 进行解码，因为转换过程根据不同的规则来进行。<br>URI 和 URI 组件之间的区别在于，组件是 URI 的一个片段，一般不含有分隔符。例如，如<br>果在完整的 URI 上使用 encodeURIComponent()函数，则几乎所有符号(句点除外)都会编码成十六<br>进制版本，包括目录分隔符。因此，应该在 URI 的最小单位上使用组件级的转换函数。例如，如<br>果组合一个包含“名&#x2F;值”对的查询字符串，就可以在名称和值上分别使用 encodeURIComponent()<br>函数。但如果在 name&#x3D;value 形式的名&#x2F;值对上使用这个函数，这个函数就会把等号编码成对应<br>的十六进制</p>
+<h2 id="eval"><a href="#eval" class="headerlink" title="eval()"></a>eval()</h2><p>eval()函数能计算任何存储为字符串的 JavaScript 语句或表达式，包括算术表达式、对象赋<br>值和对象方法调用的字符串形式。然而，这里不推荐使用 eval()函数，因为这个函数的效率极<br>低(从性能角度来看)。幸好，不用 eval()函数也可将对象名的字符串版本转换成有效的对象引用。<br>例如，如果脚本遍历一系列的对象，而这些对象的名称包含连续的数字，可以将对象名用作数<br>组索引，而不是使用 eval()函数来组合对象引用。<br>下面是设置一系列域 data0、datal 等的值的低效方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function fillFields()</span><br><span class="line">&#123;</span><br><span class="line">var theObj;</span><br><span class="line">for (var i = 0; i &lt; 10; i++)</span><br><span class="line">&#123;</span><br><span class="line">theObj = eval(&quot;document.forms[0].data&quot; + i);</span><br><span class="line">theObj.value = i;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">更高效的方式是在对象引用的索引方括号中进行连接：</span><br><span class="line">function fillFields()</span><br><span class="line">&#123;</span><br><span class="line">for (var i = 0; i &lt; 10; i++)</span><br><span class="line">&#123;</span><br><span class="line">document.getElementById(&quot;myForm&quot;).elements[&quot;data&quot; + i].value = i;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>提示：<br>只要打算使用 eval()函数，就要看看能否使用对象数组的字符串索引值来替代 eval()函数。<br>W3C DOM 使用 document.getElementByld()方法，使这个任务更容易完成，这个方法把字符串<br>作为参数，返回指定对象的引用。</p>
+<h2 id="isFinite"><a href="#isFinite" class="headerlink" title="isFinite()"></a>isFinite()</h2><p>isFinite()函数一般很少使用，它用于检查数字是否超出了 JavaScript 能处理的最大值或最小<br>值。如果数字超出了这个范围，该函数就返回 false。这个函数的参数必须是数字数据类型</p>
+<h2 id="isNaN"><a href="#isNaN" class="headerlink" title="isNaN()"></a>isNaN()</h2><p>把值传递给计算操作之前，需要使用 isNaN()函数来检查这个值是不是数字。这个函数常<br>常用于检查 parseInt()或 parseFloat()函数的结果。如果提交给这些函数的字符串不能转换成数<br>字，结果就为 NaN(一个特别的符号，表示“不是数字”)。如果这个值不是数字，isNaN()函数<br>就返回 true。</p>
+<h2 id="Number-parseFloat-parseInt"><a href="#Number-parseFloat-parseInt" class="headerlink" title="Number() parseFloat() parseInt()"></a>Number() parseFloat() parseInt()</h2><p>如果脚本不在意值的精度，并允许通过原字符串决定返回值是浮点型还是整型，就可以使<br>用 Number()函数。这个函数只有一个参数：要转换成数字的字符串。<br>parseFloat()函数也能通过原字符串决定返回值是浮点型还是整型。如果原字符串在小数点右<br>边有非零值，返回值就是浮点数。但如果原字符串是如“3.00”之类的数字，返回值就是整型。<br>在 parseInt()中，另一个可选参数可以决定转换时使用的数字基数。如果不指定基数参数，<br>JavaScript 会试着找一个基数，但这样可能使 JavaScript 出问题。当 parseInt()的字符串参数以 0</p>
+<p>开头时(文本框输入项或数据库域有可能以 0 开头)，就会出现一个重要问题：在 JavaScript 中，<br>以 0 开头的数字处理为八进制(基数为 8)，因此，parseInt(“010”)返回的十进制值为 8。<br>使用 parseInt()函数时，如果处理基数为 10 的数字，就应总是指定基数为 10。基数也可以<br>指定为 2～36 之间的数字。例如，指定基数为 2，把二进制数字符串转换成十进制形式，如下<br>所示：<br>var n &#x3D; parseInt(“011”,2);<br>&#x2F;&#x2F; result: 3<br>同样，也可以指定基数为 16，把十六进制字符串转换成十进制：<br>var n &#x3D; parseInt(“4F”,16);<br>&#x2F;&#x2F; result: 79<br>示例<br>parseInt()和 parseFloat()函数有一个非常有用的功能。如果字符串参数以至少一位数字开头，<br>后跟字母，这些函数将只处理字符串前面的数字部分，并忽略剩 余的部分。因此，可在<br>navigator.appVersion 字符串上使用 parseFloat()函数，来提取报告的版本号，而不必分析字符串<br>的剩余部分。例如，Windows 的 Firefox 1.0 报告 navigator.appVersion 值为：<br>5.0 (Windows; en-US)<br>也可通过 parseFloat()函数来获取字符串的数字部分：<br>var ver &#x3D; parseFloat(navigator.appVersion);</p>
+<p>toString()<br>unescape()<br>unwatch()<br>watch()</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2023/03/29/js%E4%B9%8B%E5%B8%B8%E7%94%A8%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0%E5%92%8C%E8%AF%AD%E5%8F%A5/" title="js之常用全局函数和语句" target="_blank" rel="external">http://example.com/2023/03/29/js之常用全局函数和语句/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/lbrjms" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/lbrjms" target="_blank"><span class="text-dark">昵称</span><small class="ml-1x">Web &amp; iOS Developer</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2023/03/31/web%E4%B9%8BPerformance/" title="web之Performance"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2023/03/29/web%E4%B9%8B%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="web之微服务"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/al_pay.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wx_pay.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/lbrjms" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

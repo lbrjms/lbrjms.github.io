@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>后台项目环境搭建 | Hexo</title>
+  <meta name="description" content="转专业的动力+本科出身不错不想低头+时不我待+热爱+弥补诸多遗憾+赚钱，其中时不我待的感觉尤为强烈，太一言难尽了。自己也想像很多同学那样过上平凡轻松的生活，但我的境地如果那样选择无异于zs，结果就是被迫疯狂卷自己（不卷别人）。  表面上我学了这么多框架和源码，看似真的只有广度没有深度？但是其实我很多内容都看了好几遍。 spring源码大致流程（getBean都看过不下十遍了，动态代理和三级缓存、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="后台项目环境搭建">
+<meta property="og:url" content="http://example.com/2023/06/18/%E5%90%8E%E5%8F%B0%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="WJ">
+<meta property="og:description" content="转专业的动力+本科出身不错不想低头+时不我待+热爱+弥补诸多遗憾+赚钱，其中时不我待的感觉尤为强烈，太一言难尽了。自己也想像很多同学那样过上平凡轻松的生活，但我的境地如果那样选择无异于zs，结果就是被迫疯狂卷自己（不卷别人）。  表面上我学了这么多框架和源码，看似真的只有广度没有深度？但是其实我很多内容都看了好几遍。 spring源码大致流程（getBean都看过不下十遍了，动态代理和三级缓存、">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://images.gitee.com/uploads/images/2020/0714/193425_4a1056c4_4914148.png">
+<meta property="og:image" content="https://images.gitee.com/uploads/images/2020/0714/193425_9bb153d1_4914148.png">
+<meta property="article:published_time" content="2023-06-18T12:47:47.000Z">
+<meta property="article:modified_time" content="2023-12-19T08:01:29.784Z">
+<meta property="article:author" content="WJ Liu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.gitee.com/uploads/images/2020/0714/193425_4a1056c4_4914148.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2023/06/18/%E5%90%8E%E5%8F%B0%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="WJ" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/lbrjms" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">昵称</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web &amp; iOS Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shanghai, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/lbrjms" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/EMQX-mqtt/">EMQX, mqtt</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/EMS/">EMS</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FUXA-mqtt-web%E7%BB%84%E6%80%81/">FUXA, mqtt, web组态</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iot/">iot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/qt/">qt</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vim/">vim</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vscode/">vscode</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA/">个人</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%BE-2d/">图, 2d</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E5%89%8D%E7%AB%AF/">微前端</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%84%E6%80%81/">组态</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js-range/" rel="tag">js, range</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mxgraph/" rel="tag">mxgraph</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95/" rel="tag">vue, 断点调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-router/" rel="tag">vue-router</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%A9%E6%A8%A1%E5%9E%8B/" rel="tag">物模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/js/" style="font-size: 13px;">js</a> <a href="/tags/js-range/" style="font-size: 13px;">js, range</a> <a href="/tags/mxgraph/" style="font-size: 13px;">mxgraph</a> <a href="/tags/redis/" style="font-size: 13px;">redis</a> <a href="/tags/springboot/" style="font-size: 13px;">springboot</a> <a href="/tags/vscode/" style="font-size: 13px;">vscode</a> <a href="/tags/vue-%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95/" style="font-size: 13px;">vue, 断点调试</a> <a href="/tags/vue-router/" style="font-size: 13px;">vue-router</a> <a href="/tags/web/" style="font-size: 13px;">web</a> <a href="/tags/webpack/" style="font-size: 13px;">webpack</a> <a href="/tags/%E7%89%A9%E6%A8%A1%E5%9E%8B/" style="font-size: 13px;">物模型</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 13px;">递归</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/go/">go</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/01/17/go%E5%9F%BA%E7%A1%80/" class="title">go基础</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-01-17T08:33:18.000Z" itemprop="datePublished">2024-01-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/vscode/">vscode</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/01/08/%E5%88%9B%E5%BB%BAvscode%E4%B8%BB%E9%A2%98%E5%B9%B6%E5%8F%91%E5%B8%83%E5%88%B0%E6%8F%92%E4%BB%B6%E5%B8%82%E5%9C%BA/" class="title">创建vscode主题并发布到插件市场</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-01-08T08:14:04.000Z" itemprop="datePublished">2024-01-08</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/27/%E5%B8%B8%E7%94%A8%E6%A8%A1%E6%9D%BF%E9%A1%B9%E7%9B%AE%E8%B0%83%E7%A0%94/" class="title">常用模板项目调研</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-27T08:16:52.000Z" itemprop="datePublished">2023-12-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/FUXA-mqtt-web%E7%BB%84%E6%80%81/">FUXA, mqtt, web组态</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/25/FUXA%E8%BF%9E%E6%8E%A5mqtt%E6%90%AD%E5%BB%BA%E7%BB%84%E6%80%81%E5%BA%94%E7%94%A8/" class="title">FUXA连接mqtt搭建组态应用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-25T07:36:35.000Z" itemprop="datePublished">2023-12-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/EMQX-mqtt/">EMQX, mqtt</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/24/EMQX/" class="title">EMQX</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-24T09:17:26.000Z" itemprop="datePublished">2023-12-24</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-后台项目环境搭建" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      后台项目环境搭建
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2023/06/18/%E5%90%8E%E5%8F%B0%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="article-date">
+	  <time datetime="2023-06-18T12:47:47.000Z" itemprop="datePublished">2023-06-18</time>
+	</a>
+</span>
+        
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/06/18/%E5%90%8E%E5%8F%B0%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <blockquote>
+<p>转专业的动力+本科出身不错不想低头+时不我待+热爱+弥补诸多遗憾+赚钱，其中时不我待的感觉尤为强烈，太一言难尽了。自己也想像很多同学那样过上平凡轻松的生活，但我的境地如果那样选择无异于zs，结果就是被迫疯狂卷自己（不卷别人）。</p>
+</blockquote>
+<p>表面上我学了这么多框架和源码，看似真的只有广度没有深度？但是其实我很多内容都看了好几遍。</p>
+<p>spring源码大致流程（getBean都看过不下十遍了，动态代理和三级缓存、组件配置啥的更不在话下）+Redis源码书+分布式事务+Tomcat源码+Netty+NIO+JUC+JVM+k8s+rabbitMQ+KafkaMQ+SpringCloud+ZK+设计模式+Mysql（MVCC、各种log）+Shiro。另外JSP、Vue、maven等必备技能<br>另外，我最擅长的其实是socket及NIO底层相关，我觉得这门技术也是我阿里一面聊一个小时最后拿sp的原因。</p>
+<h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">gulimall</span><br><span class="line">├── gulimall-common -- 工具类及通用代码</span><br><span class="line">├── renren-generator -- 人人开源项目的代码生成器</span><br><span class="line">├── gulimall-auth-server -- 认证中心（社交登录、OAuth2.0、单点登录）</span><br><span class="line">├── gulimall-cart -- 购物车服务</span><br><span class="line">├── gulimall-coupon -- 优惠卷服务</span><br><span class="line">├── gulimall-gateway -- 统一配置网关</span><br><span class="line">├── gulimall-order -- 订单服务</span><br><span class="line">├── gulimall-product -- 商品服务</span><br><span class="line">├── gulimall-search -- 检索服务</span><br><span class="line">├── gulimall-seckill -- 秒杀服务</span><br><span class="line">├── gulimall-third-party -- 第三方服务</span><br><span class="line">├── gulimall-ware -- 仓储服务</span><br><span class="line">└── gulimall-member -- 会员服务</span><br></pre></td></tr></table></figure>
+
+<h3 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h3><p><strong>后端技术</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">技术</th>
+<th align="center">说明</th>
+<th align="center">官网</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">SpringBoot</td>
+<td align="center">容器+MVC框架</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://spring.io/projects/spring-boot">https://spring.io/projects/spring-boot</a></td>
+</tr>
+<tr>
+<td align="center">SpringCloud</td>
+<td align="center">微服务架构</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://spring.io/projects/spring-cloud">https://spring.io/projects/spring-cloud</a></td>
+</tr>
+<tr>
+<td align="center">SpringCloudAlibaba</td>
+<td align="center">一系列组件</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://spring.io/projects/spring-cloud-alibaba">https://spring.io/projects/spring-cloud-alibaba</a></td>
+</tr>
+<tr>
+<td align="center">MyBatis-Plus</td>
+<td align="center">ORM框架</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://mp.baomidou.com/">https://mp.baomidou.com</a></td>
+</tr>
+<tr>
+<td align="center">renren-generator</td>
+<td align="center">人人开源项目的代码生成器</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://gitee.com/renrenio/renren-generator">https://gitee.com/renrenio/renren-generator</a></td>
+</tr>
+<tr>
+<td align="center">Elasticsearch</td>
+<td align="center">搜索引擎</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/elastic/elasticsearch">https://github.com/elastic/elasticsearch</a></td>
+</tr>
+<tr>
+<td align="center">RabbitMQ</td>
+<td align="center">消息队列</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.rabbitmq.com/">https://www.rabbitmq.com</a></td>
+</tr>
+<tr>
+<td align="center">Springsession</td>
+<td align="center">分布式缓存</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://projects.spring.io/spring-session">https://projects.spring.io/spring-session</a></td>
+</tr>
+<tr>
+<td align="center">Redisson</td>
+<td align="center">分布式锁</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/redisson/redisson">https://github.com/redisson/redisson</a></td>
+</tr>
+<tr>
+<td align="center">Docker</td>
+<td align="center">应用容器引擎</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.docker.com/">https://www.docker.com</a></td>
+</tr>
+<tr>
+<td align="center">OSS</td>
+<td align="center">对象云存储</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://github.com/aliyun/aliyun-oss-java-sdk">https://github.com/aliyun/aliyun-oss-java-sdk</a></td>
+</tr>
+</tbody></table>
+<p><strong>前端技术</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">技术</th>
+<th align="center">说明</th>
+<th align="center">官网</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Vue</td>
+<td align="center">前端框架</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://vuejs.org/">https://vuejs.org</a></td>
+</tr>
+<tr>
+<td align="center">Element</td>
+<td align="center">前端UI框架</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://element.eleme.io/">https://element.eleme.io</a></td>
+</tr>
+<tr>
+<td align="center">thymeleaf</td>
+<td align="center">模板引擎</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.thymeleaf.org/">https://www.thymeleaf.org</a></td>
+</tr>
+<tr>
+<td align="center">node.js</td>
+<td align="center">服务端的js</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://nodejs.org/en">https://nodejs.org/en</a></td>
+</tr>
+</tbody></table>
+<h3 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h3><p><strong>系统架构图</strong></p>
+<p><a target="_blank" rel="noopener" href="https://imgchr.com/i/UUvRAS"><img src="https://images.gitee.com/uploads/images/2020/0714/193425_4a1056c4_4914148.png" alt="UUvRAS.png"></a></p>
+<p><strong>业务架构图</strong></p>
+<p><img src="https://images.gitee.com/uploads/images/2020/0714/193425_9bb153d1_4914148.png" alt="UUvb7T.png"></p>
+<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><h4 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h4><table>
+<thead>
+<tr>
+<th align="center">工具</th>
+<th align="center">说明</th>
+<th align="center">官网</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">IDEA</td>
+<td align="center">开发Java程序</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/download">https://www.jetbrains.com/idea/download</a></td>
+</tr>
+<tr>
+<td align="center">RedisDesktop</td>
+<td align="center">redis客户端连接工具</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://redisdesktop.com/download">https://redisdesktop.com/download</a></td>
+</tr>
+<tr>
+<td align="center">SwitchHosts</td>
+<td align="center">本地host管理</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://oldj.github.io/SwitchHosts">https://oldj.github.io/SwitchHosts</a></td>
+</tr>
+<tr>
+<td align="center">X-shell</td>
+<td align="center">Linux远程连接工具</td>
+<td align="center"><a target="_blank" rel="noopener" href="http://www.netsarang.com/download/software.html">http://www.netsarang.com/download/software.html</a></td>
+</tr>
+<tr>
+<td align="center">Navicat</td>
+<td align="center">数据库连接工具</td>
+<td align="center"><a target="_blank" rel="noopener" href="http://www.formysql.com/xiazai.html">http://www.formysql.com/xiazai.html</a></td>
+</tr>
+<tr>
+<td align="center">PowerDesigner</td>
+<td align="center">数据库设计工具</td>
+<td align="center"><a target="_blank" rel="noopener" href="http://powerdesigner.de/">http://powerdesigner.de</a></td>
+</tr>
+<tr>
+<td align="center">Postman</td>
+<td align="center">API接口调试工具</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.postman.com/">https://www.postman.com</a></td>
+</tr>
+<tr>
+<td align="center">Jmeter</td>
+<td align="center">性能压测工具</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://jmeter.apache.org/">https://jmeter.apache.org</a></td>
+</tr>
+<tr>
+<td align="center">Typora</td>
+<td align="center">Markdown编辑器</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://typora.io/">https://typora.io</a></td>
+</tr>
+</tbody></table>
+<h4 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h4><table>
+<thead>
+<tr>
+<th align="center">工具</th>
+<th align="center">版本号</th>
+<th align="center">下载</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">JDK</td>
+<td align="center">1.8</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html">https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html</a></td>
+</tr>
+<tr>
+<td align="center">Mysql</td>
+<td align="center">5.7</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.mysql.com/">https://www.mysql.com</a></td>
+</tr>
+<tr>
+<td align="center">Redis</td>
+<td align="center">Redis</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://redis.io/download">https://redis.io/download</a></td>
+</tr>
+<tr>
+<td align="center">Elasticsearch</td>
+<td align="center">7.6.2</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.elastic.co/downloads">https://www.elastic.co/downloads</a></td>
+</tr>
+<tr>
+<td align="center">Kibana</td>
+<td align="center">7.6.2</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://www.elastic.co/cn/kibana">https://www.elastic.co/cn/kibana</a></td>
+</tr>
+<tr>
+<td align="center">RabbitMQ</td>
+<td align="center">3.8.5</td>
+<td align="center"><a target="_blank" rel="noopener" href="http://www.rabbitmq.com/download.html">http://www.rabbitmq.com/download.html</a></td>
+</tr>
+<tr>
+<td align="center">Nginx</td>
+<td align="center">1.1.6</td>
+<td align="center"><a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">http://nginx.org/en/download.html</a></td>
+</tr>
+</tbody></table>
+<p>注意：以上的除了jdk都是采用docker方式进行安装，详细安装步骤可参考百度!!!</p>
+<h2 id="分布式基础概念"><a href="#分布式基础概念" class="headerlink" title="分布式基础概念"></a>分布式基础概念</h2><p>集群是个物理形态，分布式是个工作方式。</p>
+<p>远程调用：在分布式系统中，各个服务可能处于不同主机，但是服务之间不可避免的相互调用，我们称为远程调用</p>
+<p>springcloud中使用HTTP+JSON的方式完成远程调用</p>
+<ul>
+<li>服务注册&#x2F;发现&amp;注册中心</li>
+</ul>
+<p>A服务调用B服务，A服务并不知道B服务当前在哪几台服务器有，那些是正常的，那些服务已经下线。解决这个问题可以引入注册中心。</p>
+<p>配置中心用来几种管理微服务的配置信息。</p>
+<ul>
+<li>服务熔断&amp;服务降级</li>
+</ul>
+<p>在微服务架构中，微服务之间通过网络进行通信，存在相互依赖，当其中一个服务不可用时，有可能会造成雪崩效应。要防止这样的情况，必须要有容错机制来保护服务。</p>
+<p>rpc远程调用情景：</p>
+<p>订单服务 –&gt; 商品服务 –&gt; 库存服务</p>
+<p>库存服务出现故障导致响应慢，导致商品服务需要等待，可能等到10s后库存服务才能响应。库存服务的不可用导致商品服务阻塞，商品服务等的期间，订单服务也处于阻塞。一个服务不可用导致整个服务链都阻塞。如果是高并发，第一个请求调用后阻塞10s得不到结果，第二个请求直接阻塞10s。更多的请求进来导致请求积压，全部阻塞，最终服务器的资源耗尽。导致雪崩</p>
+<p>解决方案：</p>
+<p>1 服务熔断</p>
+<p>指定超时时间，库存服务3s没有响应就超时，如果经常失败，比如10s内100个请求都失败了。开启断路保护机制，下一次请求进来不调用库存服务了，因为上一次100%错误都出现了，我们直接在此中断，商品服务直接返回，返回一些默认数据或者null，而不调用库存服务了，这样就不会导致请求积压。</p>
+<p>设置服务的超时，当被调用的服务经常失败到达某个阈值，我们可以开启断路保护机制，后来的请求不再去调用这个服务。本地直接返回默认的数据<br>2 服务降级</p>
+<p>在运维期间，当系统处于高峰期，系统资源紧张，我们可以让非核心业务降级运行。降级：某些服务不处理，或者处理简单【抛异常、返回NULL、调用Mock数据、调用Fallback处理逻辑】<br>API网关</p>
+<p>客户端发送请求到服务器路途中，设置一个网关，请求都先到达网关，网关对请求进行统一认证（合法非法）和处理等操作。他是安检。</p>
+<p>在微服务架构中，API gateway作为整体架构的重要组件，它抽象了微服务中都需要的公共功能，同时提供了客户端负载均衡，服务自动熔断，灰度发布，统一认证，限流流控，日志统计等丰富的功能，帮助我们解决很多API管理难题。</p>
+<h4 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h4><h2 id="虚拟机固定ip"><a href="#虚拟机固定ip" class="headerlink" title="虚拟机固定ip"></a>虚拟机固定ip</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://www.cnblogs.com/telwanggs/p/10882369.html</span><br><span class="line">ipv4的网络设置要和 vmware 网络编辑器里面的ip一致</span><br></pre></td></tr></table></figure>
+<h2 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">l 查看防火墙状态(systemctl status firewalld、firewall-cmd --state)</span><br><span class="line">l 暂时关闭防火墙(systemctl stop firewalld)</span><br><span class="line">l 永久关闭防火墙(systemctl disable firewalld)</span><br><span class="line">l 开启防火墙(systemctl start firewalld)</span><br><span class="line">l 开放指定端口(firewall-cmd --zone=public --add-port= 8080 /tcp --permanent)</span><br><span class="line">l 关闭指定端口(firewall-cmd --zone=public --remove-port= 8080 /tcp --permanent)</span><br><span class="line">l 立即生效(firewall-cmd --reload)</span><br><span class="line">l 查看开放的端口(firewall-cmd --zone=public --list-ports)</span><br></pre></td></tr></table></figure>
+<h2 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">https://docs.docker.com/engine/install/centos/</span><br><span class="line"></span><br><span class="line">sudo yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-engine</span><br><span class="line"></span><br><span class="line">sudo yum install -y yum-utils</span><br><span class="line">sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line"></span><br><span class="line">sudo systemctl start docker</span><br><span class="line"></span><br><span class="line">sudo systemctl start docker</span><br><span class="line"></span><br><span class="line">阿里云加速</span><br><span class="line">https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors</span><br><span class="line"></span><br><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://y1xrkxwk.mirror.aliyuncs.com&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1、查看已启动镜像：docker images</span><br><span class="line">   查看已运行容器：docker ps</span><br><span class="line">2、查看所有镜像：docker images -a</span><br><span class="line">3、启动docker：sudo systemctl start docker</span><br><span class="line">4、虚拟机开机启动：sudo systemctl enable docker</span><br><span class="line">5、设置自动启动容器：sudo docker update mysql --restart=always</span><br><span class="line">6、启动已存在的容器或重启容器，例：</span><br><span class="line">	1）查看容器的id或name：docker ps -a</span><br><span class="line">	2）重启restart id或name【重启就代表启动了】：</span><br><span class="line">		docker restart 1b4671904bfa</span><br><span class="line">		docker restart mysql</span><br><span class="line">7、终止容器：docker stop redis</span><br><span class="line">8、删除容器：docker rm redis</span><br><span class="line">9、进入容器的运行时环境</span><br><span class="line">进入mysql：docker exec -it mysql /bin/bash</span><br><span class="line">进入redis：docker exec -it redis redis-cli</span><br><span class="line">进入redis：docker exec -it redis /bin/sh</span><br><span class="line">whereis mysql</span><br><span class="line">10、退出容器运行时环境：exit</span><br><span class="line">11、虚拟机开机自动启动mysql：sudo docker update mysql --restart=always</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="mysql-安装"><a href="#mysql-安装" class="headerlink" title="mysql 安装"></a>mysql 安装</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql:5.7</span><br><span class="line">sudo docker run -p 3306:3306 --name mysql \</span><br><span class="line">-v /mydata/mysql/log:/var/log/mysql \</span><br><span class="line">-v /mydata/mysql/data:/var/lib/mysql \</span><br><span class="line">-v /mydata/mysql/conf:/etc/mysql \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=root \</span><br><span class="line">-d mysql:5.7</span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line">● -p 3306:3306：将容器的3306端口映射到主机的3306端口</span><br><span class="line">● --name：给容器命名</span><br><span class="line">● -v /mydata/mysql/log:/var/log/mysql：将配置文件挂载到主机/mydata/..</span><br><span class="line">● -e MYSQL_ROOT_PASSWORD=root：初始化root用户的密码为root</span><br><span class="line"></span><br><span class="line">修改配置 vi /mydata/mysql/conf/my.cnf</span><br><span class="line">[client]</span><br><span class="line">default-character-set=utf8</span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8</span><br><span class="line">[mysqld]</span><br><span class="line">init_connect=&#x27;SET collation_connection = utf8_unicode_ci&#x27;</span><br><span class="line">init_connect=&#x27;SET NAMES utf8&#x27;</span><br><span class="line">character-set-server=utf8</span><br><span class="line">collation-server=utf8_unicode_ci</span><br><span class="line">skip-character-set-client-handshake</span><br><span class="line">skip-name-resolve</span><br><span class="line">lower_case_table_names=1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">lower_case_table_names=1在linux下默认是0 指的是是否大小写敏感  1 表示存在磁盘是小写 比较的时候不区分大小写</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="redis-安装"><a href="#redis-安装" class="headerlink" title="redis 安装"></a>redis 安装</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">创建redis配置文件目录</span><br><span class="line">mkdir -p /mydata/redis/conf</span><br><span class="line"></span><br><span class="line">touch /mydata/redis/conf/redis.conf</span><br><span class="line"></span><br><span class="line">启动redis容器</span><br><span class="line">docker run -p 6379:6379 --name redis \</span><br><span class="line">-v /mydata/redis/data:/data \</span><br><span class="line">-v /mydata/redis/conf/redis.conf:/etc/redis/redis.conf \</span><br><span class="line">-d redis redis-server /etc/redis/redis.conf</span><br><span class="line"></span><br><span class="line">redis持久化</span><br><span class="line">echo &quot;appendonly yes&quot;  &gt;&gt; /mydata/redis/conf/redis.conf</span><br><span class="line"></span><br><span class="line"># 重启生效</span><br><span class="line">docker restart redis</span><br><span class="line"></span><br><span class="line">docker update redis --restart=always</span><br></pre></td></tr></table></figure>
+
+<h2 id="maven-配置"><a href="#maven-配置" class="headerlink" title="maven 配置"></a>maven 配置</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">下载</span><br><span class="line">https://maven.apache.org/download.cgi</span><br><span class="line"></span><br><span class="line">配置环境变量</span><br><span class="line"></span><br><span class="line">设置阿里云镜像</span><br><span class="line"></span><br><span class="line">&lt;mirror&gt;</span><br><span class="line">  &lt;id&gt;alimaven&lt;/id&gt;</span><br><span class="line">  &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;</span><br><span class="line">  &lt;name&gt;aliyun maven&lt;/name&gt;</span><br><span class="line">  &lt;url&gt;http://maven.aliyun.com/nexus/content/repositories/central/&lt;/url&gt;</span><br><span class="line">&lt;/mirror&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="mongo安装"><a href="#mongo安装" class="headerlink" title="mongo安装"></a>mongo安装</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">http://www.zhou-kang.cn/article/37</span><br><span class="line"></span><br><span class="line">#拉取镜像</span><br><span class="line">docker pull mongo:4.0.3</span><br><span class="line">#创建容器</span><br><span class="line">docker create --name mongodb -p 27017:27017 -v /mydata/mongodb/data:/data/db mongo:4.0.3 --auth</span><br><span class="line"></span><br><span class="line">#启动容器 </span><br><span class="line">docker start mongodb-server</span><br><span class="line"></span><br><span class="line">#进入容器</span><br><span class="line">docker exec -it mongodb-server /bin/bash</span><br><span class="line"></span><br><span class="line">#进入admin数据库</span><br><span class="line">mongo</span><br><span class="line">use admin</span><br><span class="line"></span><br><span class="line">#添加管理员，其拥有管理用户和角色的权限</span><br><span class="line">db.createUser(&#123; user: &#x27;lwj&#x27;, pwd: &#x27;123456&#x27;, roles: [ &#123; role: &quot;root&quot;, db: &quot;admin&quot; &#125; ] &#125;)</span><br><span class="line"></span><br><span class="line">#使用quit()退出mogondb</span><br><span class="line">&gt; quit()</span><br><span class="line"></span><br><span class="line">#进行认证</span><br><span class="line">mongo -u &quot;hang&quot; -p &quot;123456&quot; --authenticationDatabase &quot;admin&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="nacos-集成"><a href="#nacos-集成" class="headerlink" title="nacos 集成"></a>nacos 集成</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">https://blog.csdn.net/gongzi_9/article/details/123373981</span><br><span class="line">No Feign Client for loadBalancing defined. Did you forget to include</span><br><span class="line">1. 安装依赖</span><br><span class="line">2. 下载启动服务 需要java环境 一定要配置JAVA_HOME环境变量</span><br><span class="line">3. 配置服务地址 name</span><br><span class="line">4. 注解 开启服务注册</span><br><span class="line"></span><br><span class="line">nacos config</span><br><span class="line"></span><br><span class="line">1. 配置服务</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: gulimall-coupon</span><br><span class="line">  cloud:</span><br><span class="line">    nacos:</span><br><span class="line">      config:</span><br><span class="line">        server-addr: 127.0.0.1:8848</span><br><span class="line">        file-extension: yml</span><br><span class="line"></span><br><span class="line">file-extension:如果不是默认的一定要加上 对应的取值一定要也对 如果是高版本 bootstrap依赖</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="远程调用"><a href="#远程调用" class="headerlink" title="远程调用"></a>远程调用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 安装依赖 Feign</span><br><span class="line">2. 编写服务接口</span><br><span class="line">	2.1. 注解配置要调用的服务@FeignClient(&quot;gulimall-coupon&quot;)</span><br><span class="line">	2.2. 复制要调用服务方法的完整签名</span><br><span class="line">3. 注解开启远程服务 并配置接口的包名 @EnableFeignClients(basePackages = &quot;com.gulimall.member.feign&quot;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="renrenfast-网关配置"><a href="#renrenfast-网关配置" class="headerlink" title="renrenfast 网关配置"></a>renrenfast 网关配置</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">安装依赖</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-cloud-loadbalancer&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;3.1.6&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">配置网关</span><br><span class="line">- id: route_admin</span><br><span class="line">  uri: lb://renrenfast # lb 表示负载均衡</span><br><span class="line">  predicates:</span><br><span class="line">    - Path=/api/** # 默认前端都带上api前缀</span><br><span class="line">  filters:</span><br><span class="line">    - RewritePath=/api/(?&lt;segment&gt;.*),/renren-fast/$\&#123;segment&#125;</span><br><span class="line">解决跨域</span><br><span class="line">新建配置类</span><br><span class="line">@Configuration</span><br><span class="line">public class GulimailCorsConfiguration &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public CorsWebFilter corsWebFilter() &#123;</span><br><span class="line">        UrlBasedCorsConfigurationSource source =  new UrlBasedCorsConfigurationSource();</span><br><span class="line">        CorsConfiguration corsConfiguration = new CorsConfiguration();</span><br><span class="line">        //1、配置跨域</span><br><span class="line">        corsConfiguration.addAllowedHeader(&quot;*&quot;);</span><br><span class="line">        corsConfiguration.addAllowedMethod(&quot;*&quot;);</span><br><span class="line">        corsConfiguration.addAllowedOriginPattern(&quot;*&quot;);</span><br><span class="line">        corsConfiguration.setAllowCredentials(true);</span><br><span class="line"></span><br><span class="line">        source.registerCorsConfiguration(&quot;/**&quot;,corsConfiguration);</span><br><span class="line">        return new CorsWebFilter(source);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">java.lang.IllegalArgumentException: When allowCredentials is true, allowedOrigins cannot contain the special value &quot;*&quot; since that cannot be set on the &quot;Access-Control-Allow-Origin&quot; response header. To allow credentials to a set of origins, list them explicitly or consider using &quot;allowedOriginPatterns&quot; instead.</span><br><span class="line">2.4.0之后要用allowedOriginPatterns</span><br></pre></td></tr></table></figure>
+
+<h2 id="商品分类开发"><a href="#商品分类开发" class="headerlink" title="商品分类开发"></a>商品分类开发</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">逻辑删除</span><br><span class="line">https://baomidou.com/pages/6b03c5/</span><br><span class="line">添加配置</span><br><span class="line">mybatis-plus:</span><br><span class="line">  global-config:</span><br><span class="line">    db-config:</span><br><span class="line">      logic-delete-field: flag # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)</span><br><span class="line">      logic-delete-value: 1 # 逻辑已删除值(默认为 1)</span><br><span class="line">      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)</span><br><span class="line">实体类字段上加上@TableLogic注解</span><br><span class="line">@TableLogic</span><br><span class="line">private Integer deleted;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="JSR303-数据校验"><a href="#JSR303-数据校验" class="headerlink" title="JSR303 数据校验"></a>JSR303 数据校验</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">引入依赖</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-validation&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.2.2.RELEASE&lt;/version&gt;</span><br><span class="line">    &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">实体类添加注解</span><br><span class="line">譬如 @NotBland</span><br><span class="line">接口开启校验</span><br><span class="line">@Validated</span><br><span class="line"></span><br><span class="line">封装 通用code</span><br><span class="line">public enum BizCodeEnume &#123;</span><br><span class="line">    UNKNOW_EXCEPTION(10000,&quot;系统异常&quot;),</span><br><span class="line">    VAILD_EXCEPTION(10001,&quot;系统异常&quot;);</span><br><span class="line"></span><br><span class="line">    private int code;</span><br><span class="line">    private String msg;</span><br><span class="line">    BizCodeEnume(int code,String message) &#123;</span><br><span class="line">        this.code = code;</span><br><span class="line">        this.msg = message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getCode() &#123;</span><br><span class="line">        return code;</span><br><span class="line">    &#125;</span><br><span class="line">    public String getMsg() &#123;</span><br><span class="line">        return msg;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">封装统一异常处理</span><br><span class="line"></span><br><span class="line">@Slf4j</span><br><span class="line">@RestControllerAdvice(basePackages = &quot;com.gulimall.product.controller&quot;)</span><br><span class="line">public class GulimallExceptionControllerAdvice &#123;</span><br><span class="line"></span><br><span class="line">    @ExceptionHandler(value = MethodArgumentNotValidException.class)</span><br><span class="line">    public R handleVaildException(MethodArgumentNotValidException e) &#123;</span><br><span class="line">        log.error(&quot;数据校验出现异常&#123;&#125;,异常类型：&#123;&#125;&quot;,e.getMessage(),e.getClass());</span><br><span class="line">        Map&lt;String,String&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">        e.getBindingResult().getFieldErrors().forEach(item-&gt;&#123;</span><br><span class="line">            map.put(item.getField(),item.getDefaultMessage());</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        return R.error(BizCodeEnume.VAILD_EXCEPTION.getCode(), BizCodeEnume.VAILD_EXCEPTION.getMsg()).put(&quot;data&quot;,map);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @ExceptionHandler(value = Throwable.class)</span><br><span class="line">    public R handleException(Throwable throwable)&#123;</span><br><span class="line">        return R.error(BizCodeEnume.UNKNOW_EXCEPTION.getCode(), BizCodeEnume.UNKNOW_EXCEPTION.getMsg());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="SPU-SKU"><a href="#SPU-SKU" class="headerlink" title="SPU SKU"></a>SPU SKU</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">简介：</span><br><span class="line">SPU：标准化产品单元 standard product unit，是商品信息聚合的最小单位，是一组可复用、易检索的标准化信息的集合，该集合描述了一个产品的特性。</span><br><span class="line"></span><br><span class="line">SKU：库存量单位 Stock Keeping Unit，</span><br><span class="line"></span><br><span class="line">SPU：iphone XS、iphone XS max、iphone XR、MI8、</span><br><span class="line">SKU：iphonex 64G 黑曜石、MI8 8+64G+黑色</span><br></pre></td></tr></table></figure>
+
+<h2 id="业务开发"><a href="#业务开发" class="headerlink" title="业务开发"></a>业务开发</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">字段为空不返回的字段</span><br><span class="line">@JsonInclude(JsonInclude.Include.NON_EMPTY)</span><br><span class="line">	@TableField(exist = false)</span><br><span class="line">	private List&lt;CategoryEntity&gt; children;</span><br><span class="line"></span><br><span class="line">mybatis 配置分页组件</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@EnableTransactionManagement        //开启使用</span><br><span class="line">@MapperScan(&quot;com.xunqi.gulimall.product.dao&quot;)</span><br><span class="line">public class MyBatisConfig &#123;</span><br><span class="line">    //引入分页插件</span><br><span class="line">    @Bean</span><br><span class="line">    public PaginationInterceptor paginationInterceptor() &#123;</span><br><span class="line">        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();</span><br><span class="line">        // 设置请求的页面大于最大页后操作， true调回到首页，false 继续请求  默认false</span><br><span class="line">        paginationInterceptor.setOverflow(true);</span><br><span class="line">        // 设置最大单页限制数量，默认 500 条，-1 不受限制</span><br><span class="line">        paginationInterceptor.setLimit(1000);</span><br><span class="line">        return paginationInterceptor;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">关键字查询</span><br><span class="line"></span><br><span class="line">public PageUtils queryPage(Map&lt;String, Object&gt; params) &#123;</span><br><span class="line"></span><br><span class="line">	String key = (String) params.get(&quot;key&quot;);</span><br><span class="line">	QueryWrapper&lt;BrandEntity&gt; wrapper = new QueryWrapper&lt;BrandEntity&gt;();</span><br><span class="line">	if (!StringUtils.isEmpty(key)) &#123;</span><br><span class="line">	    wrapper.eq(&quot;brand_id&quot;,key).or().like(&quot;name&quot;,key);</span><br><span class="line">	&#125;</span><br><span class="line">	IPage&lt;BrandEntity&gt; page = this.page(</span><br><span class="line">		new Query&lt;BrandEntity&gt;().getPage(params),</span><br><span class="line">		wrapper</span><br><span class="line">	);</span><br><span class="line">	return new PageUtils(page);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">xml 查询</span><br><span class="line"> &lt;update id=&quot;updateCategory&quot;&gt;</span><br><span class="line">        UPDATE `pms_category_brand_relation` SET catelog_name=#&#123;name&#125; WHERE catelog_id=#&#123;catId&#125;</span><br><span class="line"> &lt;/update&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="vo-object划分"><a href="#vo-object划分" class="headerlink" title="vo object划分"></a>vo object划分</h2><ul>
+<li><p>PO(persistant object) 持久对象<br>对应数据库中的一条记录 不包含任何对数据库的操作</p>
+</li>
+<li><p>DO(Domain Object) 领域对象<br>从现实世界抽象出来的有形或者无形的业务实体</p>
+</li>
+<li><p>TO（Transfer Object）数据传输对象<br>不同应用程序之间传输的对象 微服务之间 封装传输的对象</p>
+</li>
+<li><p>DTO</p>
+</li>
+<li><p>VO 值对象<br>视图对象  通常用于业务层之间的数据传输 和po一样仅仅包含数据而已 但应该是抽象出来的业务对象<br>接收页面传递来的数据 封装对象<br>将业务处理完成的对象 封装成页面需要的数据</p>
+</li>
+<li><p>BO(business object) 业务对象</p>
+<p>BO 可以包含PO 这样处理业务逻辑 可以针对BO去处理</p>
+</li>
+<li><p>POJO</p>
+</li>
+<li><p>DAO</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">连表查询是非常危险 假设有10万个属性 1000 个分组 迪卡尔积就是十个亿中间表数据 这是非常可怕的</span><br></pre></td></tr></table></figure>
+
+<h2 id="连表查询-更新"><a href="#连表查询-更新" class="headerlink" title="连表查询 更新"></a>连表查询 更新</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public PageUtils queryBaseAttrPage(Map&lt;String, Object&gt; params, Long catelogId, String attrType) &#123;</span><br><span class="line"></span><br><span class="line">	QueryWrapper&lt;AttrEntity&gt; queryWrapper = new QueryWrapper&lt;AttrEntity&gt;()</span><br><span class="line">		.eq(&quot;attr_type&quot;,&quot;base&quot;.equalsIgnoreCase(attrType) ?</span><br><span class="line">			ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode() : ProductConstant.AttrEnum.ATTR_TYPE_SALE.getCode());</span><br><span class="line">	</span><br><span class="line">	//根据catelogId查询信息</span><br><span class="line">	if (catelogId != 0) &#123;</span><br><span class="line">	    queryWrapper.eq(&quot;catelog_id&quot;,catelogId);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	String key = (String) params.get(&quot;key&quot;);</span><br><span class="line">	if (!StringUtils.isEmpty(key)) &#123;</span><br><span class="line">	    //attr_id attr_name</span><br><span class="line">	    queryWrapper.and((wrapper) -&gt; &#123;</span><br><span class="line">	       wrapper.eq(&quot;attr_id&quot;,key).or().like(&quot;attr_name&quot;,key);</span><br><span class="line">	    &#125;);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	IPage&lt;AttrEntity&gt; page = this.page(</span><br><span class="line">		new Query&lt;AttrEntity&gt;().getPage(params),</span><br><span class="line">		queryWrapper</span><br><span class="line">	);</span><br><span class="line">	</span><br><span class="line">	PageUtils pageUtils = new PageUtils(page);</span><br><span class="line">	List&lt;AttrEntity&gt; records = page.getRecords();</span><br><span class="line">	</span><br><span class="line">	List&lt;AttrRespVo&gt; respVos = records.stream().map((attrEntity) -&gt; &#123;</span><br><span class="line">	    AttrRespVo attrRespVo = new AttrRespVo();</span><br><span class="line">	    BeanUtils.copyProperties(attrEntity, attrRespVo);</span><br><span class="line">	</span><br><span class="line">	    //设置分类和分组的名字</span><br><span class="line">	    if (&quot;base&quot;.equalsIgnoreCase(attrType)) &#123;</span><br><span class="line">		AttrAttrgroupRelationEntity relationEntity =</span><br><span class="line">			relationDao.selectOne(new QueryWrapper&lt;AttrAttrgroupRelationEntity&gt;().eq(&quot;attr_id&quot;,attrEntity.getAttrId()));</span><br><span class="line">		if (relationEntity != null &amp;&amp; relationEntity.getAttrGroupId() != null) &#123;</span><br><span class="line">		    AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(relationEntity.getAttrGroupId());</span><br><span class="line">		    attrRespVo.setGroupName(attrGroupEntity.getAttrGroupName());</span><br><span class="line">		&#125;</span><br><span class="line">	</span><br><span class="line">	    &#125;</span><br><span class="line">	</span><br><span class="line">	    CategoryEntity categoryEntity = categoryDao.selectById(attrEntity.getCatelogId());</span><br><span class="line">	    if (categoryEntity != null) &#123;</span><br><span class="line">		attrRespVo.setCatelogName(categoryEntity.getName());</span><br><span class="line">	</span><br><span class="line">	    &#125;</span><br><span class="line">	    return attrRespVo;</span><br><span class="line">	&#125;).collect(Collectors.toList());</span><br><span class="line">	</span><br><span class="line">	pageUtils.setList(respVos);</span><br><span class="line">	return pageUtils;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">AttrEntity attrEntity = new AttrEntity();</span><br><span class="line">BeanUtils.copyProperties(attr,attrEntity);</span><br><span class="line"></span><br><span class="line">this.updateById(attrEntity);</span><br><span class="line"></span><br><span class="line">if (attrEntity.getAttrType() == ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode()) &#123;</span><br><span class="line">    //1、修改分组关联</span><br><span class="line">    AttrAttrgroupRelationEntity relationEntity = new AttrAttrgroupRelationEntity();</span><br><span class="line">    relationEntity.setAttrGroupId(attr.getAttrGroupId());</span><br><span class="line">    relationEntity.setAttrId(attr.getAttrId());</span><br><span class="line"></span><br><span class="line">    Integer count = relationDao.selectCount(new QueryWrapper&lt;AttrAttrgroupRelationEntity&gt;()</span><br><span class="line">	    .eq(&quot;attr_id&quot;, attr.getAttrId()));</span><br><span class="line"></span><br><span class="line">    if (count &gt; 0) &#123;</span><br><span class="line">	relationDao.update(relationEntity,</span><br><span class="line">		new UpdateWrapper&lt;AttrAttrgroupRelationEntity&gt;().eq(&quot;attr_id&quot;,attr.getAttrId()));</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">	relationDao.insert(relationEntity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="批量删除"><a href="#批量删除" class="headerlink" title="批量删除"></a>批量删除</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;delete id=&quot;deleteBatchRelation&quot;&gt;</span><br><span class="line">        DELETE FROM pms_attr_attrgroup_relation WHERE</span><br><span class="line">        &lt;foreach collection=&quot;entities&quot; item=&quot;item&quot; separator=&quot;OR&quot;&gt;</span><br><span class="line">            (attr_id=#&#123;item.attrId&#125; AND attr_group_id=#&#123;item.attrGroupId&#125;)</span><br><span class="line">        &lt;/foreach&gt;</span><br><span class="line">&lt;/delete&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、 controller处理请求 接收和校验数据</span><br><span class="line">2、 service 结束controller传来的数据 进行业务处理</span><br><span class="line">3、 controller 接收service处理完的数据 封装成页面需要的vo</span><br></pre></td></tr></table></figure>
+<h2 id="springboot-报错之循环引用"><a href="#springboot-报错之循环引用" class="headerlink" title="springboot 报错之循环引用"></a>springboot 报错之循环引用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Relying upon circular references is discouraged and they are prohibited by default. Update your application to remove the dependency cycle between beans. As a last resort, it may be possible to break the cycle automatically by setting spring.main.allow-circular-references to true.</span><br><span class="line">解决办法加入     @Lazy 注解</span><br></pre></td></tr></table></figure>
+<h2 id="elasticsearch、kibana安装"><a href="#elasticsearch、kibana安装" class="headerlink" title="elasticsearch、kibana安装"></a>elasticsearch、kibana安装</h2><ul>
+<li>拉取<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull elasticsearch:7.4.2</span><br><span class="line">docker pull kibina:7.4.2</span><br></pre></td></tr></table></figure></li>
+<li>挂载目录配置<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /mydata/elasticsearch/config</span><br><span class="line">mkdir -p /mydata/elasticsearch/data</span><br></pre></td></tr></table></figure></li>
+<li>启动Elastic search<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \</span><br><span class="line">-e  &quot;discovery.type=single-node&quot; \</span><br><span class="line">-e ES_JAVA_OPTS=&quot;-Xms64m -Xmx512m&quot; \</span><br><span class="line">-v /mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \</span><br><span class="line">-v /mydata/elasticsearch/data:/usr/share/elasticsearch/data \</span><br><span class="line">-v  /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins \</span><br><span class="line">-d elasticsearch:7.4.2 </span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>设置开机启动elasticsearch</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker update elasticsearch --restart=always</span><br></pre></td></tr></table></figure>
+<p>（4）启动kibana：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name kibana -e ELASTICSEARCH_HOSTS=http://192.168.187.130:9200 -p 5601:5601 -d kibana:7.4.2</span><br></pre></td></tr></table></figure>
+<p>设置开机启动kibana</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker update kibana  --restart=always</span><br></pre></td></tr></table></figure>
+<p>（5）测试</p>
+<p>查看elasticsearch版本信息： <a target="_blank" rel="noopener" href="http://192.168.187.130:9200/">http://192.168.187.130:9200/</a> </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line"><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;63d82eeec0d3&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;cluster_name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;elasticsearch&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;cluster_uuid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;j0meIrlySGGXjd-8tkEPNg&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line"><span class="attr">&quot;number&quot;</span><span class="punctuation">:</span> <span class="string">&quot;7.4.2&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;build_flavor&quot;</span><span class="punctuation">:</span> <span class="string">&quot;default&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;build_type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;docker&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;build_hash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2f90bbf7b93631e52bafb59b3b049cb44ec25e96&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;build_date&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-28T20:40:44.881551Z&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;build_snapshot&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;lucene_version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;8.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;minimum_wire_compatibility_version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;6.8.0&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;minimum_index_compatibility_version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;6.0.0-beta1&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;tagline&quot;</span><span class="punctuation">:</span> <span class="string">&quot;You Know, for Search&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>显示elasticsearch 节点信息<a target="_blank" rel="noopener" href="http://192.168.187.130:9200/_cat/nodes">http://192.168.187.130:9200/_cat/nodes</a> ，</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> <span class="number">76</span> <span class="number">95</span> <span class="number">1</span> <span class="number">0.26</span> <span class="number">1.40</span> <span class="number">1.22</span> dilm * <span class="number">0</span>adeb7852e00</span><br></pre></td></tr></table></figure>
+<p>访问Kibana： <a target="_blank" rel="noopener" href="http://192.168.137.14:5601/app/kibana">http://192.168.137.14:5601/app/kibana</a> </p>
+<blockquote>
+<p>测试数据 <a target="_blank" rel="noopener" href="https://github.com/elastic/elasticsearch/blob/v6.8.18/docs/src/test/resources/accounts.json">https://github.com/elastic/elasticsearch/blob/v6.8.18/docs/src/test/resources/accounts.json</a></p>
+</blockquote>
+<h2 id="下载工具安装"><a href="#下载工具安装" class="headerlink" title="下载工具安装"></a>下载工具安装</h2><p><code> yum -y install wget</code></p>
+<h2 id="压缩工具安装"><a href="#压缩工具安装" class="headerlink" title="压缩工具安装"></a>压缩工具安装</h2><p><code>yum install zip unzip</code></p>
+<h2 id="plugin目录安装分词器"><a href="#plugin目录安装分词器" class="headerlink" title="plugin目录安装分词器"></a>plugin目录安装分词器</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.4.2/elasticsearch-analysis-ik-7.4.2.zip</span><br><span class="line">unzip elasticsearch-analysis-ik-7.4.2.zip -d ik</span><br><span class="line">docker restart elasticsearch</span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2023/06/18/%E5%90%8E%E5%8F%B0%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="后台项目环境搭建" target="_blank" rel="external">http://example.com/2023/06/18/后台项目环境搭建/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/lbrjms" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/lbrjms" target="_blank"><span class="text-dark">昵称</span><small class="ml-1x">Web &amp; iOS Developer</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2023/12/11/%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/" title="(no title)"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2023/06/12/springcloud/" title="springcloud"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/al_pay.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wx_pay.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/lbrjms" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

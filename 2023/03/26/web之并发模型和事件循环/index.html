@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>web之消息队列 | Hexo</title>
+  <meta name="description" content="https:&#x2F;&#x2F;blog.51cto.com&#x2F;kaimo313&#x2F;5588246 https:&#x2F;&#x2F;developer.mozilla.org&#x2F;zh-CN&#x2F;docs&#x2F;Web&#x2F;JavaScript&#x2F;EventLoop 循环模型 JavaScript 有一个基于事件循环的并发模型，事件循环负责执行代码、收集和处理事件以及执行队列中的子任务 栈函数调用形成了一个由若干帧组成的栈。 1234567891011">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web之消息队列">
+<meta property="og:url" content="http://example.com/2023/03/26/web%E4%B9%8B%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B%E5%92%8C%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/index.html">
+<meta property="og:site_name" content="WJ">
+<meta property="og:description" content="https:&#x2F;&#x2F;blog.51cto.com&#x2F;kaimo313&#x2F;5588246 https:&#x2F;&#x2F;developer.mozilla.org&#x2F;zh-CN&#x2F;docs&#x2F;Web&#x2F;JavaScript&#x2F;EventLoop 循环模型 JavaScript 有一个基于事件循环的并发模型，事件循环负责执行代码、收集和处理事件以及执行队列中的子任务 栈函数调用形成了一个由若干帧组成的栈。 1234567891011">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop/the_javascript_runtime_environment_example.svg">
+<meta property="article:published_time" content="2023-03-26T06:27:25.000Z">
+<meta property="article:modified_time" content="2023-12-19T08:01:29.783Z">
+<meta property="article:author" content="WJ Liu">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop/the_javascript_runtime_environment_example.svg">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2023/03/26/web%E4%B9%8B%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B%E5%92%8C%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="WJ" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/lbrjms" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.png" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">昵称</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web &amp; iOS Developer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shanghai, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/lbrjms" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/EMQX-mqtt/">EMQX, mqtt</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/EMS/">EMS</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/FUXA-mqtt-web%E7%BB%84%E6%80%81/">FUXA, mqtt, web组态</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/go/">go</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iot/">iot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/js/">js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nosql/">nosql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/qt/">qt</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/sql/">sql</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vim/">vim</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vscode/">vscode</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA/">个人</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%BE-2d/">图, 2d</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E5%89%8D%E7%AB%AF/">微前端</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%84%E6%80%81/">组态</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js-range/" rel="tag">js, range</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mxgraph/" rel="tag">mxgraph</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95/" rel="tag">vue, 断点调试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue-router/" rel="tag">vue-router</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%A9%E6%A8%A1%E5%9E%8B/" rel="tag">物模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/git/" style="font-size: 13px;">git</a> <a href="/tags/hexo/" style="font-size: 13px;">hexo</a> <a href="/tags/js/" style="font-size: 13px;">js</a> <a href="/tags/js-range/" style="font-size: 13px;">js, range</a> <a href="/tags/mxgraph/" style="font-size: 13px;">mxgraph</a> <a href="/tags/redis/" style="font-size: 13px;">redis</a> <a href="/tags/springboot/" style="font-size: 13px;">springboot</a> <a href="/tags/vscode/" style="font-size: 13px;">vscode</a> <a href="/tags/vue-%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95/" style="font-size: 13px;">vue, 断点调试</a> <a href="/tags/vue-router/" style="font-size: 13px;">vue-router</a> <a href="/tags/web/" style="font-size: 13px;">web</a> <a href="/tags/webpack/" style="font-size: 13px;">webpack</a> <a href="/tags/%E7%89%A9%E6%A8%A1%E5%9E%8B/" style="font-size: 13px;">物模型</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 13px;">递归</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">二月 2023</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/go/">go</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/01/17/go%E5%9F%BA%E7%A1%80/" class="title">go基础</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-01-17T08:33:18.000Z" itemprop="datePublished">2024-01-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/vscode/">vscode</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/01/08/%E5%88%9B%E5%BB%BAvscode%E4%B8%BB%E9%A2%98%E5%B9%B6%E5%8F%91%E5%B8%83%E5%88%B0%E6%8F%92%E4%BB%B6%E5%B8%82%E5%9C%BA/" class="title">创建vscode主题并发布到插件市场</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-01-08T08:14:04.000Z" itemprop="datePublished">2024-01-08</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/27/%E5%B8%B8%E7%94%A8%E6%A8%A1%E6%9D%BF%E9%A1%B9%E7%9B%AE%E8%B0%83%E7%A0%94/" class="title">常用模板项目调研</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-27T08:16:52.000Z" itemprop="datePublished">2023-12-27</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/FUXA-mqtt-web%E7%BB%84%E6%80%81/">FUXA, mqtt, web组态</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/25/FUXA%E8%BF%9E%E6%8E%A5mqtt%E6%90%AD%E5%BB%BA%E7%BB%84%E6%80%81%E5%BA%94%E7%94%A8/" class="title">FUXA连接mqtt搭建组态应用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-25T07:36:35.000Z" itemprop="datePublished">2023-12-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/EMQX-mqtt/">EMQX, mqtt</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/24/EMQX/" class="title">EMQX</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-24T09:17:26.000Z" itemprop="datePublished">2023-12-24</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-web之并发模型和事件循环" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      web之消息队列
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2023/03/26/web%E4%B9%8B%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B%E5%92%8C%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" class="article-date">
+	  <time datetime="2023-03-26T06:27:25.000Z" itemprop="datePublished">2023-03-26</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/web/">web</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/web/" rel="tag">web</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/03/26/web%E4%B9%8B%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B%E5%92%8C%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p><a target="_blank" rel="noopener" href="https://blog.51cto.com/kaimo313/5588246">https://blog.51cto.com/kaimo313/5588246</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop</a></p>
+<h1 id="循环模型"><a href="#循环模型" class="headerlink" title="循环模型"></a>循环模型</h1><p><img src="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop/the_javascript_runtime_environment_example.svg"></p>
+<p>JavaScript 有一个基于事件循环的并发模型，事件循环负责执行代码、收集和处理事件以及执行队列中的子任务</p>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><p>函数调用形成了一个由若干帧组成的栈。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function foo(b) &#123;</span><br><span class="line">  let a = 10;</span><br><span class="line">  return a + b + 11;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function bar(x) &#123;</span><br><span class="line">  let y = 3;</span><br><span class="line">  return foo(x * y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(bar(7)); /</span><br></pre></td></tr></table></figure>
+<p>当调用 bar 时，第一个帧被创建并压入栈中，帧中包含了 bar 的参数和局部变量。当 bar 调用 foo 时，第二个帧被创建并被压入栈中，放在第一个帧之上，帧中包含 foo 的参数和局部变量。当 foo 执行完毕然后返回时，第二个帧就被弹出栈（剩下 bar 函数的调用帧）。当 bar 也执行完毕然后返回时，第一个帧也被弹出，栈就被清空了</p>
+<h2 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h2><p>对象被分配在堆中，堆是一个用来表示一大块（通常是非结构化的）内存区域的计算机术语</p>
+<h2 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h2><p>一个 JavaScript 运行时包含了一个待处理消息的消息队列。每一个消息都关联着一个用以处理这个消息的回调函数<br>运行时会从最先进入队列的消息开始处理队列中的消息。被处理的消息会被移出队列，并作为输入参数来调用与之关联的函数。正如前面所提到的，调用一个函数总是会为其创造一个新的栈帧。</p>
+<p>函数的处理会一直进行到执行栈再次为空为止；然后事件循环将会处理队列中的下一个消息（如果还有的话）。</p>
+<p>每一个消息完整地执行后，其他消息才会被执行。</p>
+<ul>
+<li>优秀的特性：<br>当一个函数执行时，它不会被抢占，只有在它运行完毕之后才会去运行任何其他的代码，才能修改这个函数操作的数据</li>
+<li>缺点:<br>在于当一个消息需要太长时间才能处理完毕时，Web 应用程序就无法处理与用户的交互，例如点击或滚动</li>
+</ul>
+<h2 id="添加消息"><a href="#添加消息" class="headerlink" title="添加消息"></a>添加消息</h2><p>在浏览器里，每当一个事件发生并且有一个事件监听器绑定在该事件上时，一个消息就会被添加进消息队列。如果没有事件监听器，这个事件将会丢失</p>
+<h2 id="多个运行时互相通信"><a href="#多个运行时互相通信" class="headerlink" title="多个运行时互相通信"></a>多个运行时互相通信</h2><p>一个 web worker 或者一个跨域的 iframe 都有自己的栈、堆和消息队列。两个不同的运行时只能通过 postMessage 方法进行通信。如果另一个运行时侦听 message 事件，则此方法会向该运行时添加消息。</p>
+<h2 id="渲染主线程做哪些事情（单线程）"><a href="#渲染主线程做哪些事情（单线程）" class="headerlink" title="渲染主线程做哪些事情（单线程）"></a>渲染主线程做哪些事情（单线程）</h2><ul>
+<li>解析html</li>
+<li>解析css</li>
+<li>计算样式</li>
+<li>布局</li>
+<li>处理图层</li>
+<li>没秒页面刷新 60次</li>
+<li>执行全局js代码</li>
+<li>执行事件处理函数</li>
+<li>执行定时器的回调函数<br>…</li>
+</ul>
+<h2 id="模型的迭代"><a href="#模型的迭代" class="headerlink" title="模型的迭代"></a>模型的迭代</h2><ul>
+<li>单消息队列</li>
+</ul>
+<p>在单消息队列架构下，存在着低优先级任务会阻塞高优先级任务的情况，这个问题称为消息队列的队头阻塞问题。</p>
+<ul>
+<li>高优先级队列</li>
+</ul>
+<p>在渲染进程中引入一个任务调度器，负责从多个消息队列中选出合适的任务，通常实现的逻辑，先按照顺序从高优先级队列中取出任务，如果高优先级的队列为空，那么再按照顺序从低优级队列中取出任务。</p>
+<p>缺点：任务的相对执行顺序会被打乱。</p>
+<ul>
+<li>根据消息类型来实现消息队列</li>
+</ul>
+<p>不同类型的任务创建不同优先级的消息队列：</p>
+<ol>
+<li>可以创建输入事件的消息队列，用来存放输入事件。</li>
+<li>可以创建合成任务的消息队列，用来存放合成事件。</li>
+<li>可以创建默认消息队列，用来保存如资源加载的事件和定时器回调等事件。</li>
+<li>还可以创建一个空闲消息队列，用来存放 V8 的垃圾自动垃圾回收这一类实时性不高的事件。<br>根据消息类型实现不同优先级的消息队列：</li>
+</ol>
+<p>缺点：消息队列的优先级都是固定的，任务调度器会按照这种固定好的静态的优先级来分别调度任务。使用静态优先级策略，网页的加载速度会被拖慢。</p>
+<ul>
+<li>动态调度</li>
+</ul>
+<p>Chromium 当前所采用的任务调度策略：动态调度策略</p>
+<ul>
+<li>任务饿死</li>
+</ul>
+<p>某个状态下，一直有新的高优先级的任务加入到队列中，这样就会导致其他低优先级的任务得不到执行，这称为任务饿死。</p>
+<p>Chromium 为了解决任务饿死的问题，给每个队列设置了执行权重，也就是如果连续执行了一定个数的高优先级的任务，那么中间会执行一次低优先级的任务，这样就缓解了任务饿死的情况。</p>
+<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><p><a target="_blank" rel="noopener" href="https://github.com/chromium/chromium/blob/main/base/message_loop/message_pump_default.cc"><strong>消息循环</strong></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">namespace base &#123;</span><br><span class="line"></span><br><span class="line">MessagePumpDefault::MessagePumpDefault()</span><br><span class="line">    : keep_running_(true),</span><br><span class="line">      event_(WaitableEvent::ResetPolicy::AUTOMATIC,</span><br><span class="line">             WaitableEvent::InitialState::NOT_SIGNALED) &#123;</span><br><span class="line">  event_.declare_only_used_while_idle();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MessagePumpDefault::~MessagePumpDefault() = default;</span><br><span class="line"></span><br><span class="line">void MessagePumpDefault::Run(Delegate* delegate) &#123;</span><br><span class="line">  AutoReset&lt;bool&gt; auto_reset_keep_running(&amp;keep_running_, true);</span><br><span class="line"></span><br><span class="line">  for (;;) &#123;</span><br><span class="line">#if BUILDFLAG(IS_APPLE)</span><br><span class="line">    mac::ScopedNSAutoreleasePool autorelease_pool;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">    Delegate::NextWorkInfo next_work_info = delegate-&gt;DoWork();</span><br><span class="line">    bool has_more_immediate_work = next_work_info.is_immediate();</span><br><span class="line">    if (!keep_running_)</span><br><span class="line">      break;</span><br><span class="line"></span><br><span class="line">    if (has_more_immediate_work)</span><br><span class="line">      continue;</span><br><span class="line"></span><br><span class="line">    has_more_immediate_work = delegate-&gt;DoIdleWork();</span><br><span class="line">    if (!keep_running_)</span><br><span class="line">      break;</span><br><span class="line"></span><br><span class="line">    if (has_more_immediate_work)</span><br><span class="line">      continue;</span><br><span class="line"></span><br><span class="line">    if (next_work_info.delayed_run_time.is_max()) &#123;</span><br><span class="line">      event_.Wait();</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      event_.TimedWait(next_work_info.remaining_delay());</span><br><span class="line">    &#125;</span><br><span class="line">    // Since event_ is auto-reset, we don&#x27;t need to do anything special here</span><br><span class="line">    // other than service each delegate method.</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void MessagePumpDefault::Quit() &#123;</span><br><span class="line">  keep_running_ = false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void MessagePumpDefault::ScheduleWork() &#123;</span><br><span class="line">  // Since this can be called on any thread, we need to ensure that our Run</span><br><span class="line">  // loop wakes up.</span><br><span class="line">  event_.Signal();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void MessagePumpDefault::ScheduleDelayedWork(</span><br><span class="line">    const Delegate::NextWorkInfo&amp; next_work_info) &#123;</span><br><span class="line">  // Since this is always called from the same thread as Run(), there is nothing</span><br><span class="line">  // to do as the loop is already running. It will wait in Run() with the</span><br><span class="line">  // correct timeout when it&#x27;s out of immediate tasks.</span><br><span class="line">  // TODO(gab): Consider removing ScheduleDelayedWork() when all pumps function</span><br><span class="line">  // this way (bit.ly/merge-message-pump-do-work).</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;  //</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/chromium/chromium/blob/main/third_party/blink/public/platform/task_type.h"><strong>队列类型</strong></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br></pre></td><td class="code"><pre><span class="line">#ifndef THIRD_PARTY_BLINK_PUBLIC_PLATFORM_TASK_TYPE_H_</span><br><span class="line">#define THIRD_PARTY_BLINK_PUBLIC_PLATFORM_TASK_TYPE_H_</span><br><span class="line"></span><br><span class="line">namespace blink &#123;</span><br><span class="line"></span><br><span class="line">// A list of task sources known to Blink according to the spec.</span><br><span class="line">// This enum is used for a histogram and it should not be re-numbered.</span><br><span class="line">//</span><br><span class="line">// For the task type usage guideline, see https://bit.ly/2vMAsQ4</span><br><span class="line">//</span><br><span class="line">// When a new task type is created:</span><br><span class="line">// * Set the new task type&#x27;s value to &quot;Next value&quot;</span><br><span class="line">// * Update kMaxValue to point to the new task type</span><br><span class="line">// * Increment &quot;Next value&quot;</span><br><span class="line">// * in tools/metrics/histograms/enums.xml update the</span><br><span class="line">//   &quot;RendererSchedulerTaskType&quot; enum</span><br><span class="line">// * update TaskTypes.md</span><br><span class="line">//</span><br><span class="line">// Next value: 83</span><br><span class="line">enum class TaskType : unsigned char &#123;</span><br><span class="line">  ///////////////////////////////////////</span><br><span class="line">  // Speced tasks should use one of the following task types</span><br><span class="line">  ///////////////////////////////////////</span><br><span class="line"></span><br><span class="line">  // Speced tasks and related internal tasks should be posted to one of</span><br><span class="line">  // the following task runners. These task runners may be throttled.</span><br><span class="line"></span><br><span class="line">  // This value is used as a default value in cases where TaskType</span><br><span class="line">  // isn&#x27;t supported yet. Don&#x27;t use outside platform/scheduler code.</span><br><span class="line">  kDeprecatedNone = 0,</span><br><span class="line"></span><br><span class="line">  // https://html.spec.whatwg.org/multipage/webappapis.html#generic-task-sources</span><br><span class="line">  //</span><br><span class="line">  // This task source is used for features that react to DOM manipulations, such</span><br><span class="line">  // as things that happen in a non-blocking fashion when an element is inserted</span><br><span class="line">  // into the document.</span><br><span class="line">  kDOMManipulation = 1,</span><br><span class="line">  // This task source is used for features that react to user interaction, for</span><br><span class="line">  // example keyboard or mouse input. Events sent in response to user input</span><br><span class="line">  // (e.g. click events) must be fired using tasks queued with the user</span><br><span class="line">  // interaction task source.</span><br><span class="line">  kUserInteraction = 2,</span><br><span class="line">  // TODO(altimin) Fix the networking task source related namings once it is</span><br><span class="line">  // clear how</span><br><span class="line">  // all loading tasks are annotated.</span><br><span class="line">  // This task source is used for features that trigger in response to network</span><br><span class="line">  // activity.</span><br><span class="line">  kNetworking = 3,</span><br><span class="line">  // This is a part of Networking task that should not be frozen when a page is</span><br><span class="line">  // frozen.</span><br><span class="line">  kNetworkingUnfreezable = 75,</span><br><span class="line">  // This task source is used for control messages between kNetworking tasks.</span><br><span class="line">  kNetworkingControl = 4,</span><br><span class="line">  // Tasks used to run low priority scripts.</span><br><span class="line">  kLowPriorityScriptExecution = 81,</span><br><span class="line">  // This task source is used to queue calls to history.back() and similar APIs.</span><br><span class="line">  kHistoryTraversal = 5,</span><br><span class="line"></span><br><span class="line">  // https://html.spec.whatwg.org/multipage/embedded-content.html#the-embed-element</span><br><span class="line">  // This task source is used for the embed element setup steps.</span><br><span class="line">  kEmbed = 6,</span><br><span class="line"></span><br><span class="line">  // https://html.spec.whatwg.org/multipage/embedded-content.html#media-elements</span><br><span class="line">  // This task source is used for all tasks queued in the [Media elements]</span><br><span class="line">  // section and subsections of the spec unless explicitly specified otherwise.</span><br><span class="line">  kMediaElementEvent = 7,</span><br><span class="line"></span><br><span class="line">  // https://html.spec.whatwg.org/multipage/scripting.html#the-canvas-element</span><br><span class="line">  // This task source is used to invoke the result callback of</span><br><span class="line">  // HTMLCanvasElement.toBlob().</span><br><span class="line">  kCanvasBlobSerialization = 8,</span><br><span class="line"></span><br><span class="line">  // https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model</span><br><span class="line">  // This task source is used when an algorithm requires a microtask to be</span><br><span class="line">  // queued.</span><br><span class="line">  kMicrotask = 9,</span><br><span class="line"></span><br><span class="line">  // https://html.spec.whatwg.org/multipage/webappapis.html#timers</span><br><span class="line">  // For tasks queued by setTimeout() or setInterval().</span><br><span class="line">  //</span><br><span class="line">  // Task nesting level is &lt; 5 and timeout is zero.</span><br><span class="line">  kJavascriptTimerImmediate = 72,</span><br><span class="line">  // Task nesting level is &lt; 5 and timeout is &gt; 0.</span><br><span class="line">  kJavascriptTimerDelayedLowNesting = 73,</span><br><span class="line">  // Task nesting level is &gt;= 5.</span><br><span class="line">  kJavascriptTimerDelayedHighNesting = 10,</span><br><span class="line">  // Note: The timeout is increased to be at least 4ms when the task nesting</span><br><span class="line">  // level is &gt;= 5. Therefore, the timeout is necessarily &gt; 0 for</span><br><span class="line">  // kJavascriptTimerDelayedHighNesting.</span><br><span class="line"></span><br><span class="line">  // https://html.spec.whatwg.org/multipage/comms.html#sse-processing-model</span><br><span class="line">  // This task source is used for any tasks that are queued by EventSource</span><br><span class="line">  // objects.</span><br><span class="line">  kRemoteEvent = 11,</span><br><span class="line"></span><br><span class="line">  // https://html.spec.whatwg.org/multipage/comms.html#feedback-from-the-protocol</span><br><span class="line">  // The task source for all tasks queued in the [WebSocket] section of the</span><br><span class="line">  // spec.</span><br><span class="line">  kWebSocket = 12,</span><br><span class="line"></span><br><span class="line">  // https://html.spec.whatwg.org/multipage/comms.html#web-messaging</span><br><span class="line">  // This task source is used for the tasks in cross-document messaging.</span><br><span class="line">  kPostedMessage = 13,</span><br><span class="line"></span><br><span class="line">  // https://html.spec.whatwg.org/multipage/comms.html#message-ports</span><br><span class="line">  kUnshippedPortMessage = 14,</span><br><span class="line"></span><br><span class="line">  // https://www.w3.org/TR/FileAPI/#blobreader-task-source</span><br><span class="line">  // This task source is used for all tasks queued in the FileAPI spec to read</span><br><span class="line">  // byte sequences associated with Blob and File objects.</span><br><span class="line">  kFileReading = 15,</span><br><span class="line"></span><br><span class="line">  // https://www.w3.org/TR/IndexedDB/#request-api</span><br><span class="line">  kDatabaseAccess = 16,</span><br><span class="line"></span><br><span class="line">  // https://w3c.github.io/presentation-api/#common-idioms</span><br><span class="line">  // This task source is used for all tasks in the Presentation API spec.</span><br><span class="line">  kPresentation = 17,</span><br><span class="line"></span><br><span class="line">  // https://www.w3.org/TR/2016/WD-generic-sensor-20160830/#sensor-task-source</span><br><span class="line">  // This task source is used for all tasks in the Sensor API spec.</span><br><span class="line">  kSensor = 18,</span><br><span class="line"></span><br><span class="line">  // https://w3c.github.io/performance-timeline/#performance-timeline</span><br><span class="line">  kPerformanceTimeline = 19,</span><br><span class="line"></span><br><span class="line">  // https://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15</span><br><span class="line">  // This task source is used for all tasks in the WebGL spec.</span><br><span class="line">  kWebGL = 20,</span><br><span class="line"></span><br><span class="line">  // https://www.w3.org/TR/requestidlecallback/#start-an-event-loop-s-idle-period</span><br><span class="line">  kIdleTask = 21,</span><br><span class="line"></span><br><span class="line">  // Use MiscPlatformAPI for a task that is defined in the spec but is not yet</span><br><span class="line">  // associated with any specific task runner in the spec. MiscPlatformAPI is</span><br><span class="line">  // not encouraged for stable and matured APIs. The spec should define the task</span><br><span class="line">  // runner explicitly.</span><br><span class="line">  // The task runner may be throttled.</span><br><span class="line">  kMiscPlatformAPI = 22,</span><br><span class="line"></span><br><span class="line">  // Tasks used for DedicatedWorker&#x27;s requestAnimationFrame.</span><br><span class="line">  kWorkerAnimation = 51,</span><br><span class="line"></span><br><span class="line">  // Obsolete.</span><br><span class="line">  // kNetworkingWithURLLoaderAnnotation = 50, (see crbug.com/860545)</span><br><span class="line">  // kExperimentalWebSchedulingUserInteraction = 53,</span><br><span class="line">  // kExperimentalWebSchedulingBestEffort = 54,</span><br><span class="line"></span><br><span class="line">  // https://drafts.csswg.org/css-font-loading/#task-source</span><br><span class="line">  kFontLoading = 56,</span><br><span class="line"></span><br><span class="line">  // https://w3c.github.io/manifest/#dfn-application-life-cycle-task-source</span><br><span class="line">  kApplicationLifeCycle = 57,</span><br><span class="line"></span><br><span class="line">  // https://wicg.github.io/background-fetch/#infrastructure</span><br><span class="line">  kBackgroundFetch = 58,</span><br><span class="line"></span><br><span class="line">  // https://www.w3.org/TR/permissions/</span><br><span class="line">  kPermission = 59,</span><br><span class="line"></span><br><span class="line">  // https://w3c.github.io/ServiceWorker/#dfn-client-message-queue</span><br><span class="line">  kServiceWorkerClientMessage = 60,</span><br><span class="line"></span><br><span class="line">  // https://w3c.github.io/web-locks/#web-locks-tasks-source</span><br><span class="line">  kWebLocks = 66,</span><br><span class="line"></span><br><span class="line">  // Task type used for the Prioritized Task Scheduling API</span><br><span class="line">  // (https://wicg.github.io/scheduling-apis/#the-posted-task-task-source).</span><br><span class="line">  // This task type should not be passed directly to</span><br><span class="line">  // FrameScheduler::GetTaskRunner(); it is used indirectly by</span><br><span class="line">  // WebSchedulingTaskQueues.</span><br><span class="line">  kWebSchedulingPostedTask = 67,</span><br><span class="line"></span><br><span class="line">  // https://w3c.github.io/screen-wake-lock/#dfn-screen-wake-lock-task-source</span><br><span class="line">  kWakeLock = 76,</span><br><span class="line"></span><br><span class="line">  // https://storage.spec.whatwg.org/#storage-task-source</span><br><span class="line">  kStorage = 82,</span><br><span class="line"></span><br><span class="line">  ///////////////////////////////////////</span><br><span class="line">  // Not-speced tasks should use one of the following task types</span><br><span class="line">  ///////////////////////////////////////</span><br><span class="line"></span><br><span class="line">  // The default task type. The task may be throttled or paused.</span><br><span class="line">  kInternalDefault = 23,</span><br><span class="line"></span><br><span class="line">  // Tasks used for all tasks associated with loading page content.</span><br><span class="line">  kInternalLoading = 24,</span><br><span class="line"></span><br><span class="line">  // Tasks for tests or mock objects.</span><br><span class="line">  kInternalTest = 26,</span><br><span class="line"></span><br><span class="line">  // Tasks that are posting back the result from the WebCrypto task runner to</span><br><span class="line">  // the Blink thread that initiated the call and holds the Promise. Tasks with</span><br><span class="line">  // this type are posted by:</span><br><span class="line">  // * //components/webcrypto</span><br><span class="line">  kInternalWebCrypto = 27,</span><br><span class="line"></span><br><span class="line">  // Tasks to execute media-related things like logging or playback. Tasks with</span><br><span class="line">  // this type are mainly posted by:</span><br><span class="line">  // * //content/renderer/media</span><br><span class="line">  // * //media</span><br><span class="line">  kInternalMedia = 29,</span><br><span class="line"></span><br><span class="line">  // Tasks to execute things for real-time media processing like recording. If a</span><br><span class="line">  // task touches MediaStreamTracks, associated sources/sinks, and Web Audio,</span><br><span class="line">  // this task type should be used.</span><br><span class="line">  // Tasks with this type are mainly posted by:</span><br><span class="line">  // * //content/renderer/media</span><br><span class="line">  // * //media</span><br><span class="line">  // * blink/renderer/modules/webaudio</span><br><span class="line">  // * blink/public/platform/audio</span><br><span class="line">  kInternalMediaRealTime = 30,</span><br><span class="line"></span><br><span class="line">  // Tasks related to user interaction like clicking or inputting texts.</span><br><span class="line">  kInternalUserInteraction = 32,</span><br><span class="line"></span><br><span class="line">  // Tasks related to the inspector.</span><br><span class="line">  kInternalInspector = 33,</span><br><span class="line"></span><br><span class="line">  // Obsolete.</span><br><span class="line">  // kInternalWorker = 36,</span><br><span class="line"></span><br><span class="line">  // Translation task that freezes when the frame is not visible.</span><br><span class="line">  kInternalTranslation = 55,</span><br><span class="line"></span><br><span class="line">  // Tasks used at IntersectionObserver.</span><br><span class="line">  kInternalIntersectionObserver = 44,</span><br><span class="line"></span><br><span class="line">  // Task used for ContentCapture.</span><br><span class="line">  kInternalContentCapture = 61,</span><br><span class="line"></span><br><span class="line">  // Navigation tasks and tasks which have to run in order with them, including</span><br><span class="line">  // legacy IPCs and channel associated interfaces.</span><br><span class="line">  // Note that the ordering between tasks related to different frames is not</span><br><span class="line">  // always guaranteed - tasks belonging to different frames can be reordered</span><br><span class="line">  // when one of the frames is frozen.</span><br><span class="line">  // Note: all AssociatedRemotes/AssociatedReceivers should use this task type.</span><br><span class="line">  kInternalNavigationAssociated = 63,</span><br><span class="line"></span><br><span class="line">  // Tasks which should run when the frame is frozen, but otherwise should run</span><br><span class="line">  // in order with other legacy IPC and channel-associated interfaces.</span><br><span class="line">  // Only tasks related to unfreezing itself should run here, the majority of</span><br><span class="line">  // the tasks</span><br><span class="line">  // should use kInternalNavigationAssociated instead.</span><br><span class="line">  kInternalNavigationAssociatedUnfreezable = 64,</span><br><span class="line"></span><br><span class="line">  // Task used to split a script loading task for cooperative scheduling</span><br><span class="line">  kInternalContinueScriptLoading = 65,</span><br><span class="line"></span><br><span class="line">  // Tasks used to control frame lifecycle - they should run even when the frame</span><br><span class="line">  // is frozen.</span><br><span class="line">  kInternalFrameLifecycleControl = 68,</span><br><span class="line"></span><br><span class="line">  // Tasks used for find-in-page.</span><br><span class="line">  kInternalFindInPage = 70,</span><br><span class="line"></span><br><span class="line">  // Tasks that come in on the HighPriorityLocalFrame interface.</span><br><span class="line">  kInternalHighPriorityLocalFrame = 71,</span><br><span class="line"></span><br><span class="line">  // Tasks that are should use input priority task queue/runner.</span><br><span class="line">  kInternalInputBlocking = 77,</span><br><span class="line"></span><br><span class="line">  // Tasks related to the WebGPU API</span><br><span class="line">  kWebGPU = 78,</span><br><span class="line"></span><br><span class="line">  // Cross-process PostMessage IPCs that are deferred in the current task.</span><br><span class="line">  kInternalPostMessageForwarding = 79,</span><br><span class="line"></span><br><span class="line">  // Tasks related to renderer-initiated navigation cancellation.</span><br><span class="line">  kInternalNavigationCancellation = 80,</span><br><span class="line"></span><br><span class="line">  ///////////////////////////////////////</span><br><span class="line">  // The following task types are only for thread-local queues.</span><br><span class="line">  ///////////////////////////////////////</span><br><span class="line"></span><br><span class="line">  // The following task types are internal-use only, escpecially for annotations</span><br><span class="line">  // like UMA of per-thread task queues. Do not specify these task types when to</span><br><span class="line">  // get a task queue/runner.</span><br><span class="line"></span><br><span class="line">  kMainThreadTaskQueueV8 = 37,</span><br><span class="line">  kMainThreadTaskQueueCompositor = 38,</span><br><span class="line">  kMainThreadTaskQueueDefault = 39,</span><br><span class="line">  kMainThreadTaskQueueInput = 40,</span><br><span class="line">  kMainThreadTaskQueueIdle = 41,</span><br><span class="line">  // Removed:</span><br><span class="line">  // kMainThreadTaskQueueIPC = 42,</span><br><span class="line">  kMainThreadTaskQueueControl = 43,</span><br><span class="line">  // Removed:</span><br><span class="line">  // kMainThreadTaskQueueCleanup = 52,</span><br><span class="line">  kMainThreadTaskQueueMemoryPurge = 62,</span><br><span class="line">  kMainThreadTaskQueueNonWaking = 69,</span><br><span class="line">  kMainThreadTaskQueueIPCTracking = 74,</span><br><span class="line">  kCompositorThreadTaskQueueDefault = 45,</span><br><span class="line">  kCompositorThreadTaskQueueInput = 49,</span><br><span class="line">  kWorkerThreadTaskQueueDefault = 46,</span><br><span class="line">  kWorkerThreadTaskQueueV8 = 47,</span><br><span class="line">  kWorkerThreadTaskQueueCompositor = 48,</span><br><span class="line"></span><br><span class="line">  kMaxValue = kStorage,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#125;  // namespace blink</span><br><span class="line"></span><br><span class="line">#endif  // THIRD_PARTY_BLINK_PUBLIC_PLATFORM_TASK_TYPE_H_</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2023/03/26/web%E4%B9%8B%E5%B9%B6%E5%8F%91%E6%A8%A1%E5%9E%8B%E5%92%8C%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" title="web之消息队列" target="_blank" rel="external">http://example.com/2023/03/26/web之并发模型和事件循环/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/lbrjms" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.png" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/lbrjms" target="_blank"><span class="text-dark">昵称</span><small class="ml-1x">Web &amp; iOS Developer</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2023/03/29/web%E4%B9%8B%E5%BE%AE%E6%9C%8D%E5%8A%A1/" title="web之微服务"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2023/03/25/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" title="各个语言学习路径"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/al_pay.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wx_pay.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/lbrjms" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
